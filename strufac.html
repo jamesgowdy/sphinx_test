@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>strufac module &mdash; project_name  documentation</title>
+    
+    <link rel="stylesheet" href="_static/default.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="project_name  documentation" href="index.html" />
+    <link rel="prev" title="calc module" href="calc.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="calc.html" title="calc module"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">project_name  documentation</a> &raquo;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="module-strufac">
+<span id="strufac-module"></span><h1>strufac module<a class="headerlink" href="#module-strufac" title="Permalink to this headline">¶</a></h1>
+<dl class="class">
+<dt id="strufac.ParsePDB">
+<em class="property">class </em><tt class="descclassname">strufac.</tt><tt class="descname">ParsePDB</tt><big>(</big><em>pdbfile</em><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB" title="Permalink to this definition">¶</a></dt>
+<dd><p>Parse a PDB file for data needed to calculate structure factors</p>
+<blockquote>
+<div>The PDB is parsed according to the following format described [here]
+(<a class="reference external" href="http://deposit.rcsb.org/adit/docs/pdb_atom_format.html">http://deposit.rcsb.org/adit/docs/pdb_atom_format.html</a>), the symmetry
+operators are extracted from the mandatory REMARK 290 record.</div></blockquote>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param:</th><td class="field-body"><p class="first">path to a PDB file
+:type: str</p>
+<table class="last docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">ivar x:</th><td class="field-body">x-coordinate (cartesian world basis)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ivar y:</th><td class="field-body">y-coordinate (cartesian world basis)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">ivar z:</th><td class="field-body">z-coordinate (cartesian world basis)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ivar n:</th><td class="field-body">atomic occupancies</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">ivar B:</th><td class="field-body">isotropic B-factors</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ivar e:</th><td class="field-body">element symbol</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">ivar S:</th><td class="field-body">deorthoganlisation matrix</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ivar abc:</th><td class="field-body">unit cell lengths (in Angstroms)</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">ivar angles:</th><td class="field-body">unit cell angles (in radians)</td>
+</tr>
+<tr class="field-even field"><th class="field-name">ivar Rw:</th><td class="field-body">symmetry operator rotation matricies for cartesian basis</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">ivar Tw:</th><td class="field-body">symmetry operator translation vector for catesian basis</td>
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strufac.calc_hmax">
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_hmax</tt><big>(</big><em>d</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_hmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_hmax" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="calc.html"
+                        title="previous chapter">calc module</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/strufac.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="right" >
+          <a href="calc.html" title="calc module"
+             >previous</a> |</li>
+        <li><a href="index.html">project_name  documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+        &copy; Copyright 2014, James Gowdy.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2.2.
+    </div>
+  </body>
+</html>
