@@ -53,29 +53,31 @@
 <dl class="class">
 <dt id="strufac.ParsePDB">
 <em class="property">class </em><tt class="descclassname">strufac.</tt><tt class="descname">ParsePDB</tt><big>(</big><em>pdbfile</em><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB" title="Permalink to this definition">¶</a></dt>
-<dd><dl class="docutils">
-<dt>Parse a PDB file for data needed to calculate structure factors</dt>
-<dd>The PDB is parsed according to the following format described at
-<a class="reference external" href="http://deposit.rcsb.org/adit/docs/pdb_atom_format.html">http://deposit.rcsb.org/adit/docs/pdb_atom_format.html</a></dd>
-</dl>
-<p>the symmetry operators are extracted from the mandatory REMARK 290 record.</p>
+<dd><p>Parse a PDB file for data needed to calculate structure factors
+The PDB is parsed according to the following format described at
+<a class="reference external" href="http://deposit.rcsb.org/adit/docs/pdb_atom_format.html">http://deposit.rcsb.org/adit/docs/pdb_atom_format.html</a>
+the symmetry operators are extracted from the mandatory REMARK 290 record.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>pdbfile</strong> &#8211; path to a PDB file
-:type pdbfile: str
-:ivar x: x-coordinate (cartesian world basis)
-:ivar y: y-coordinate (cartesian world basis)
-:ivar z: z-coordinate (cartesian world basis)
-:ivar n: atomic occupancies
-:ivar B: isotropic B-factors
-:ivar e: element symbol
-:ivar S: deorthoganlisation matrix
-:ivar abc: unit cell lengths (in Angstroms)
-:ivar angles: unit cell angles (in radians) 
-:ivar Rw: symmetry operator rotation matricies for cartesian basis 
-:ivar Tw: symmetry operator translation vector for catesian basis</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>pdbfile</strong> (<em>str</em>) &#8211; path to a PDB file</p>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<li><strong>x</strong> &#8211; x-coordinate (cartesian world basis)</li>
+<li><strong>y</strong> &#8211; y-coordinate (cartesian world basis)</li>
+<li><strong>z</strong> &#8211; z-coordinate (cartesian world basis)</li>
+<li><strong>n</strong> &#8211; atomic occupancies</li>
+<li><strong>B</strong> &#8211; isotropic B-factors</li>
+<li><strong>e</strong> &#8211; element symbol</li>
+<li><strong>S</strong> &#8211; deorthoganlisation matrix</li>
+<li><strong>abc</strong> &#8211; unit cell lengths (in Angstroms)</li>
+<li><strong>angles</strong> &#8211; unit cell angles (in radians)</li>
+<li><strong>Rw</strong> &#8211; symmetry operator rotation matricies for cartesian basis</li>
+<li><strong>Tw</strong> &#8211; symmetry operator translation vector for catesian basis</li>
+</ul>
+</td>
 </tr>
 </tbody>
 </table>
