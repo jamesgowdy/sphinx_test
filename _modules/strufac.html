@@ -52,8 +52,7 @@
 
 <div class="viewcode-block" id="ParsePDB"><a class="viewcode-back" href="../strufac.html#strufac.ParsePDB">[docs]</a><span class="k">class</span> <span class="nc">ParsePDB</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;Parse a PDB file for data needed to calculate structure factors</span>
-<span class="sd">    The PDB is parsed according to the following format described at</span>
-<span class="sd">    http://deposit.rcsb.org/adit/docs/pdb_atom_format.html</span>
+<span class="sd">    The PDB is parsed according to the following format described `here`_</span>
 <span class="sd">    the symmetry operators are extracted from the mandatory REMARK 290 record.</span>
 
 <span class="sd">    :param pdbfile: path to a PDB file</span>
@@ -69,6 +68,8 @@
 <span class="sd">    :ivar angles: unit cell angles (in radians) </span>
 <span class="sd">    :ivar Rw: symmetry operator rotation matricies for cartesian basis </span>
 <span class="sd">    :ivar Tw: symmetry operator translation vector for catesian basis</span>
+
+<span class="sd">    .. _here: http://deposit.rcsb.org/adit/docs/pdb_atom_format.html</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pdbfile</span><span class="p">):</span>
