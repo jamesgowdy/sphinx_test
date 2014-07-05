@@ -62,13 +62,14 @@
 <span class="sd">    :ivar n: atomic occupancies</span>
 <span class="sd">    :ivar B: isotropic B-factors</span>
 <span class="sd">    :ivar e: element symbol</span>
-<span class="sd">    :ivar S: deorthoganlisation matrix</span>
+<span class="sd">    :ivar S: deorthoganlisation (SCALE) matrix</span>
 <span class="sd">    :ivar abc: unit cell lengths (in Angstroms)</span>
 <span class="sd">    :ivar angles: unit cell angles (in radians) </span>
 <span class="sd">    :ivar Rw: symmetry operator rotation matricies for cartesian basis </span>
 <span class="sd">    :ivar Tw: symmetry operator translation vector for catesian basis</span>
 <span class="sd">    :raises RuntimeError: if no REMARK 290 SYMTRY record found</span>
-<span class="sd">    :raises RuntimeError: if no REMARK 290 SYMTRY record found</span>
+<span class="sd">    :raises RuntimeError: if no SCALE matrix record found</span>
+<span class="sd">    :raises RuntimeError: if no CRYST1 record found</span>
 
 <span class="sd">    .. _format described here: http://deposit.rcsb.org/adit/docs/pdb_atom_format.html</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -117,7 +118,11 @@
                     <span class="bp">self</span><span class="o">.</span><span class="n">symops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
                     
         <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rw</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;No symmetry operators in PDB file&#39;</span><span class="p">)</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;No symmetry operators found in PDB file&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;No SCALE matrix found in PDB file&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;abc&#39;</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;No CRYST1 record found in PDB file&#39;</span><span class="p">)</span>
 
 
 </div>

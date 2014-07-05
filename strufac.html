@@ -70,7 +70,7 @@ The symmetry operators are extracted from the mandatory REMARK 290 record.</p>
 <li><strong>n</strong> &#8211; atomic occupancies</li>
 <li><strong>B</strong> &#8211; isotropic B-factors</li>
 <li><strong>e</strong> &#8211; element symbol</li>
-<li><strong>S</strong> &#8211; deorthoganlisation matrix</li>
+<li><strong>S</strong> &#8211; deorthoganlisation (SCALE) matrix</li>
 <li><strong>abc</strong> &#8211; unit cell lengths (in Angstroms)</li>
 <li><strong>angles</strong> &#8211; unit cell angles (in radians)</li>
 <li><strong>Rw</strong> &#8211; symmetry operator rotation matricies for cartesian basis</li>
@@ -80,7 +80,8 @@ The symmetry operators are extracted from the mandatory REMARK 290 record.</p>
 </tr>
 <tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
 <li><strong>RuntimeError</strong> &#8211; if no REMARK 290 SYMTRY record found</li>
-<li><strong>RuntimeError</strong> &#8211; if no REMARK 290 SYMTRY record found</li>
+<li><strong>RuntimeError</strong> &#8211; if no SCALE matrix record found</li>
+<li><strong>RuntimeError</strong> &#8211; if no CRYST1 record found</li>
 </ul>
 </td>
 </tr>
