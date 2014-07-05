@@ -53,9 +53,9 @@
 <dl class="class">
 <dt id="strufac.ParsePDB">
 <em class="property">class </em><tt class="descclassname">strufac.</tt><tt class="descname">ParsePDB</tt><big>(</big><em>pdbfile</em><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB" title="Permalink to this definition">¶</a></dt>
-<dd><p>Parse a PDB file for data needed to calculate structure factors
-The PDB is parsed according to the following format described <a class="reference external" href="http://deposit.rcsb.org/adit/docs/pdb_atom_format.html">here</a>
-the symmetry operators are extracted from the mandatory REMARK 290 record.</p>
+<dd><p>Parse a PDB file for info needed to calculate structure factors
+The PDB is parsed according to the following <a class="reference external" href="http://deposit.rcsb.org/adit/docs/pdb_atom_format.html">format described here</a>
+The symmetry operators are extracted from the mandatory REMARK 290 record.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -63,7 +63,7 @@ the symmetry operators are extracted from the mandatory REMARK 290 record.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>pdbfile</strong> (<em>str</em>) &#8211; path to a PDB file</p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first simple">
 <li><strong>x</strong> &#8211; x-coordinate (cartesian world basis)</li>
 <li><strong>y</strong> &#8211; y-coordinate (cartesian world basis)</li>
 <li><strong>z</strong> &#8211; z-coordinate (cartesian world basis)</li>
@@ -76,6 +76,10 @@ the symmetry operators are extracted from the mandatory REMARK 290 record.</p>
 <li><strong>Rw</strong> &#8211; symmetry operator rotation matricies for cartesian basis</li>
 <li><strong>Tw</strong> &#8211; symmetry operator translation vector for catesian basis</li>
 </ul>
+</td>
+</tr>
+<tr class="field-odd field"><th class="field-name" colspan="2">Raises RuntimeError:</th></tr>
+<tr class="field-odd field"><td>&nbsp;</td><td class="field-body"><p class="first last">if no REMARK 290 SYMTRY record found</p>
 </td>
 </tr>
 </tbody>

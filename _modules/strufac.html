@@ -51,12 +51,11 @@
 <span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">radians</span>
 
 <div class="viewcode-block" id="ParsePDB"><a class="viewcode-back" href="../strufac.html#strufac.ParsePDB">[docs]</a><span class="k">class</span> <span class="nc">ParsePDB</span><span class="p">:</span>
-    <span class="sd">&#39;&#39;&#39;Parse a PDB file for data needed to calculate structure factors</span>
-<span class="sd">    The PDB is parsed according to the following format described `here`_</span>
-<span class="sd">    the symmetry operators are extracted from the mandatory REMARK 290 record.</span>
+    <span class="sd">&#39;&#39;&#39;Parse a PDB file for info needed to calculate structure factors</span>
+<span class="sd">    The PDB is parsed according to the following `format described here`_</span>
+<span class="sd">    The symmetry operators are extracted from the mandatory REMARK 290 record.</span>
 
-<span class="sd">    :param pdbfile: path to a PDB file</span>
-<span class="sd">    :type pdbfile: str</span>
+<span class="sd">    :param str pdbfile: path to a PDB file</span>
 <span class="sd">    :ivar x: x-coordinate (cartesian world basis)</span>
 <span class="sd">    :ivar y: y-coordinate (cartesian world basis)</span>
 <span class="sd">    :ivar z: z-coordinate (cartesian world basis)</span>
@@ -68,8 +67,9 @@
 <span class="sd">    :ivar angles: unit cell angles (in radians) </span>
 <span class="sd">    :ivar Rw: symmetry operator rotation matricies for cartesian basis </span>
 <span class="sd">    :ivar Tw: symmetry operator translation vector for catesian basis</span>
+<span class="sd">    :raises RuntimeError: if no REMARK 290 SYMTRY record found</span>
 
-<span class="sd">    .. _here: http://deposit.rcsb.org/adit/docs/pdb_atom_format.html</span>
+<span class="sd">    .. _format described here: http://deposit.rcsb.org/adit/docs/pdb_atom_format.html</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pdbfile</span><span class="p">):</span>
@@ -115,7 +115,10 @@
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">symops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
                     
-        <span class="k">assert</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rw</span><span class="p">),</span> <span class="s">&#39;No symmetry operators&#39;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rw</span><span class="p">):</span>
+            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;No symmetry operators in PDB file&#39;</span><span class="p">)</span>
+
+
 </div>
 <div class="viewcode-block" id="calc_hmax"><a class="viewcode-back" href="../strufac.html#strufac.calc_hmax">[docs]</a><span class="k">def</span> <span class="nf">calc_hmax</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
     <span class="k">pass</span>
