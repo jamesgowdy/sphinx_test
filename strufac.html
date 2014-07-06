@@ -127,9 +127,9 @@ record; the deorthoganilsation matrix is extracted from the SCALE record.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param :</th><td class="field-body">Instance of :class: <cite>ParsePDB &lt;ParsePBD&gt;</cite></td>
+<tr class="field-odd field"><th class="field-name">Param :</th><td class="field-body">Instance of :class: <tt class="docutils literal"><span class="pre">ParsePDB</span> <span class="pre">&lt;ParsePBD&gt;</span></tt></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">transformed coordinates (xc, yc, zc)</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">transformed coordinates <tt class="docutils literal"><span class="pre">(xc,</span> <span class="pre">yc,</span> <span class="pre">zc)</span></tt></td>
 </tr>
 </tbody>
 </table>
@@ -182,7 +182,7 @@ t_c &amp;= \mathbf{S}t_w\end{split}\]</div>
 
 <dl class="function">
 <dt id="strufac.generate_hkl">
-<tt class="descclassname">strufac.</tt><tt class="descname">generate_hkl</tt><big>(</big><em>pdb</em>, <em>dmin</em>, <em>dmax=1000000.0</em><big>)</big><a class="reference internal" href="_modules/strufac.html#generate_hkl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.generate_hkl" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">generate_hkl</tt><big>(</big><em>pdb</em>, <em>dmin</em>, <em>dmax=1000</em><big>)</big><a class="reference internal" href="_modules/strufac.html#generate_hkl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.generate_hkl" title="Permalink to this definition">¶</a></dt>
 <dd><p>List hkl indicies that fall within a range [dmin, dmax]
 also calculate the corresponding d-spacing and sin theta over 
 lambda where,</p>
