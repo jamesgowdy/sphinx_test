@@ -65,12 +65,12 @@ As well as the ATOM and HETATM records the parser will extract:</p>
 <li>The deorthoganilsation matrix from the SCALE record.</li>
 </ul>
 <p>A RuntimeError is raised is these are not available. Once parsed the 
-attributes are accessed</p>
-<p>::
-pdb = ParsePDB(&#8216;example.pdb&#8217;)
-for xw, yw, zw in zip(pdb.xw, pdb.xw, pdb.zw):</p>
-<blockquote>
-<div>print xw, yw, zw</div></blockquote>
+attributes are accessed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pdb</span> <span class="o">=</span> <span class="n">ParsePDB</span><span class="p">(</span><span class="s">&#39;example.pdb&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">xw</span><span class="p">,</span> <span class="n">yw</span><span class="p">,</span> <span class="n">zw</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">xw</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">xw</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">zw</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">xw</span><span class="p">,</span> <span class="n">yw</span><span class="p">,</span> <span class="n">zw</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
