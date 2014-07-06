@@ -184,6 +184,7 @@
 
 <span class="sd">    :param pdb: instance of :class:`ParsePDB &lt;ParsePDB&gt;`</span>
 <span class="sd">    :param dmin: minimum interplanar distance of interest</span>
+<span class="sd">    :type dmin: float</span>
 <span class="sd">    :return: Miller indicies as a tuple: ``(hmax, kmax, lmax)``</span>
 
 <span class="sd">    .. _structure factor calculation: http://nbviewer.ipython.org/github/jamesgowdy/biophys/blob/master/sf_directsum.ipynb</span>
@@ -202,7 +203,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">pass</span>
 </div>
-<div class="viewcode-block" id="generate_hkl"><a class="viewcode-back" href="../strufac.html#strufac.generate_hkl">[docs]</a><span class="k">def</span> <span class="nf">generate_hkl</span><span class="p">(</span><span class="n">pdb</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_hkl"><a class="viewcode-back" href="../strufac.html#strufac.generate_hkl">[docs]</a><span class="k">def</span> <span class="nf">generate_hkl</span><span class="p">(</span><span class="n">pdb</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">1000.</span><span class="p">):</span>
     <span class="sd">r&#39;&#39;&#39;List hkl indicies that fall within a resolution range </span>
 <span class="sd">    [*dmin*, *dmax*] also returning the corresponding interplanar </span>
 <span class="sd">    distance (*d*) and :math:`\frac{\sin(\theta)}{\lambda}` (*stol*)</span>
@@ -211,7 +212,7 @@
 <span class="sd">    :param dmin: minimum resolution (interplanar distance)</span>
 <span class="sd">    :param dmax: optional maximum resolution (interplanar distance) </span>
 <span class="sd">    :type dmin: float</span>
-<span class="sd">    :type dmin: float</span>
+<span class="sd">    :type dmax: float</span>
 <span class="sd">    :yield: (h,k,l) (d,stol)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">ST</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
