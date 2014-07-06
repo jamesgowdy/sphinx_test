@@ -64,13 +64,7 @@ As well as the ATOM and HETATM records the parser will extract:</p>
 <li>The unit cell parameters from the CRYST1 record</li>
 <li>The deorthoganilsation matrix from the SCALE record.</li>
 </ul>
-<p>A RuntimeError is raised is these are not available. Once parsed the 
-attributes are accessed:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">pdb</span> <span class="o">=</span> <span class="n">ParsePDB</span><span class="p">(</span><span class="s">&#39;example.pdb&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">xw</span><span class="p">,</span> <span class="n">yw</span><span class="p">,</span> <span class="n">zw</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">xw</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">xw</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">zw</span><span class="p">):</span>
-    <span class="k">print</span> <span class="n">xw</span><span class="p">,</span> <span class="n">yw</span><span class="p">,</span> <span class="n">zw</span>
-</pre></div>
-</div>
+<p>A RuntimeError is raised if these are not available.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -95,6 +89,14 @@ attributes are accessed:</p>
 </tr>
 </tbody>
 </table>
+<p>Once parsed the above varibles can be accessed as attributes for example
+to calculate the coordinates in the crystallographic basis:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pdb</span> <span class="o">=</span> <span class="n">ParsePDB</span><span class="p">(</span><span class="s">&#39;example.pdb&#39;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">xyz</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">xw</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">xw</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">zw</span><span class="p">):</span>
+    <span class="n">xyz_frac</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">xyz</span><span class="p">)</span>
+    <span class="k">print</span> <span class="n">xyz_frac</span>
+</pre></div>
+</div>
 </dd></dl>
 
 <dl class="function">
