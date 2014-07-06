@@ -55,9 +55,11 @@
 <div class="viewcode-block" id="ParsePDB"><a class="viewcode-back" href="../strufac.html#strufac.ParsePDB">[docs]</a><span class="k">class</span> <span class="nc">ParsePDB</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;Parse a PDB file for info needed to calculate structure factors</span>
 <span class="sd">    The PDB is parsed according to the following `format described here`_.</span>
-<span class="sd">    The space groups symmetry operators are extracted from the mandatory </span>
-<span class="sd">    REMARK 290 record; the unit cell parameters are extracted from the CRYST1 </span>
-<span class="sd">    record; the deorthoganilsation matrix is extracted from the SCALE record.</span>
+<span class="sd">    As well as the ATOM and HETATM records the parser will extract:</span>
+<span class="sd">    </span>
+<span class="sd">    * The symmetry operators from the mandatory REMARK 290 record</span>
+<span class="sd">    * The unit cell parameters from the CRYST1 record</span>
+<span class="sd">    * The deorthoganilsation matrix from the SCALE record.</span>
 
 <span class="sd">    :param str pdbfile: path to a PDB file</span>
 <span class="sd">    </span>
@@ -139,8 +141,7 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">tw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">tw</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
 </div>
 <div class="viewcode-block" id="calc_fracsymop"><a class="viewcode-back" href="../strufac.html#strufac.calc_fracsymop">[docs]</a><span class="k">def</span> <span class="nf">calc_fracsymop</span><span class="p">(</span><span class="n">pdb</span><span class="p">):</span>
-    <span class="sd">r&#39;&#39;&#39;Transform the symmetry opertators into the fractional </span>
-<span class="sd">    crystallographic basis :math:`a^2+b^2` blahahah</span>
+    <span class="sd">r&#39;&#39;&#39;Transform the symmetry opertators into the fractional crystallographic basis</span>
 <span class="sd">    </span>
 <span class="sd">    .. math ::</span>
 <span class="sd">      R_c &amp;= \mathbf{SR}_w\mathbf{S}^I \\</span>
@@ -156,7 +157,7 @@
     <span class="k">return</span> <span class="n">Rc</span><span class="p">,</span> <span class="n">tc</span>
 </div>
 <div class="viewcode-block" id="calc_fraccoord"><a class="viewcode-back" href="../strufac.html#strufac.calc_fraccoord">[docs]</a><span class="k">def</span> <span class="nf">calc_fraccoord</span><span class="p">(</span><span class="n">pdb</span><span class="p">):</span>
-    <span class="sd">r&#39;&#39;&#39;Transform the coordinates into the fractional crystallographic basis</span>
+    <span class="sd">r&#39;&#39;&#39;Transform the coordinates into the fractional crystallographic basis </span>
 
 <span class="sd">    .. math ::</span>
 <span class="sd">      \begin{bmatrix} x_c \\ y_c \\ z_c \end{bmatrix} = \mathbf{S}</span>
