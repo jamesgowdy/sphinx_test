@@ -1,0 +1,7 @@
+strufac2 Module
+===============
+
+.. automodule:: strufac2
+    :members:
+    :undoc-members:
+    :show-inheritance:
