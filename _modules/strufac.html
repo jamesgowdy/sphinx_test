@@ -47,47 +47,53 @@
           <div class="body">
             
   <h1>Source code for strufac</h1><div class="highlight"><pre>
-<span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
-<span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">radians</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="kn">as</span> <span class="nn">np</span>
 
 <div class="viewcode-block" id="ParsePDB"><a class="viewcode-back" href="../strufac.html#strufac.ParsePDB">[docs]</a><span class="k">class</span> <span class="nc">ParsePDB</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;Parse a PDB file for info needed to calculate structure factors</span>
-<span class="sd">    The PDB is parsed according to the following `format described here`_</span>
-<span class="sd">    The symmetry operators are extracted from the mandatory REMARK 290 record.</span>
+<span class="sd">    The PDB is parsed according to the following `format described here`_.</span>
+<span class="sd">    The space groups symmetry operators are extracted from the mandatory </span>
+<span class="sd">    REMARK 290 record; the unit cell parameters are extracted from the CRYST1 </span>
+<span class="sd">    record; the deorthoganilsation matrix is extracted from the SCALE record.</span>
 
 <span class="sd">    :param str pdbfile: path to a PDB file</span>
-<span class="sd">    :ivar x: x-coordinate (cartesian world basis)</span>
-<span class="sd">    :ivar y: y-coordinate (cartesian world basis)</span>
-<span class="sd">    :ivar z: z-coordinate (cartesian world basis)</span>
+<span class="sd">    </span>
+<span class="sd">    :ivar xw: x-coordinate (cartesian world basis)</span>
+<span class="sd">    :ivar yw: y-coordinate (cartesian world basis)</span>
+<span class="sd">    :ivar zw: z-coordinate (cartesian world basis)</span>
 <span class="sd">    :ivar n: atomic occupancies</span>
-<span class="sd">    :ivar B: isotropic B-factors</span>
+<span class="sd">    :ivar Biso: isotropic B-factors</span>
 <span class="sd">    :ivar e: element symbol</span>
 <span class="sd">    :ivar S: deorthoganlisation (SCALE) matrix</span>
 <span class="sd">    :ivar abc: unit cell lengths (in Angstroms)</span>
 <span class="sd">    :ivar angles: unit cell angles (in radians) </span>
 <span class="sd">    :ivar Rw: symmetry operator rotation matricies for cartesian basis </span>
-<span class="sd">    :ivar Tw: symmetry operator translation vector for catesian basis</span>
+<span class="sd">    :ivar tw: symmetry operator translation vector for catesian basis</span>
+
 <span class="sd">    :raises RuntimeError: if no REMARK 290 SYMTRY record found</span>
-<span class="sd">    :raises RuntimeError: if no SCALE matrix record found</span>
+<span class="sd">    :raises RuntimeError: if no SCALE matrix found</span>
 <span class="sd">    :raises RuntimeError: if no CRYST1 record found</span>
+<span class="sd">    :raises AssertionError: if origin offset non-zero</span>
 
 <span class="sd">    .. _format described here: http://deposit.rcsb.org/adit/docs/pdb_atom_format.html</span>
 <span class="sd">    &#39;&#39;&#39;</span>
 
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">pdbfile</span><span class="p">):</span>
+
+        <span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">defaultdict</span>
         
         <span class="c"># initalise attributes</span>
-        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;x&#39;</span><span class="p">,</span><span class="s">&#39;y&#39;</span><span class="p">,</span><span class="s">&#39;z&#39;</span><span class="p">,</span><span class="s">&#39;n&#39;</span><span class="p">,</span><span class="s">&#39;Biso&#39;</span><span class="p">,</span><span class="s">&#39;e&#39;</span><span class="p">,</span><span class="s">&#39;S&#39;</span><span class="p">,</span><span class="s">&#39;offset&#39;</span><span class="p">,</span><span class="s">&#39;symops&#39;</span><span class="p">]:</span> 
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;xw&#39;</span><span class="p">,</span> <span class="s">&#39;yw&#39;</span><span class="p">,</span> <span class="s">&#39;zw&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;Biso&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;S&#39;</span><span class="p">,</span> <span class="s">&#39;symops&#39;</span><span class="p">,</span> <span class="s">&#39;Rw&#39;</span><span class="p">,</span> <span class="s">&#39;tw&#39;</span><span class="p">]:</span> 
             <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
-        <span class="bp">self</span><span class="o">.</span><span class="n">Rw</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Tw</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">),</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
-        
+        <span class="n">Rw</span><span class="p">,</span> <span class="n">Tw</span> <span class="o">=</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">),</span> <span class="n">defaultdict</span><span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+
         <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">pdbfile</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&#39;</span><span class="se">\n</span><span class="s">&#39;</span><span class="p">):</span>
 
             <span class="k">if</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;ATOM&#39;</span><span class="p">)</span> <span class="ow">or</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;HETATM&#39;</span><span class="p">):</span>
                 <span class="c"># atomic coordinates etc.</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">30</span><span class="p">:</span><span class="mi">38</span><span class="p">]))</span> 
-                <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">38</span><span class="p">:</span><span class="mi">46</span><span class="p">]))</span> 
-                <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">46</span><span class="p">:</span><span class="mi">54</span><span class="p">]))</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">xw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">30</span><span class="p">:</span><span class="mi">38</span><span class="p">]))</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">yw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">38</span><span class="p">:</span><span class="mi">46</span><span class="p">]))</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">zw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">46</span><span class="p">:</span><span class="mi">54</span><span class="p">]))</span> 
                 <span class="bp">self</span><span class="o">.</span><span class="n">n</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">54</span><span class="p">:</span><span class="mi">60</span><span class="p">]))</span> 
                 <span class="bp">self</span><span class="o">.</span><span class="n">B</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">60</span><span class="p">:</span><span class="mi">66</span><span class="p">]))</span> 
                 <span class="bp">self</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="nb">str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">76</span><span class="p">:</span><span class="mi">78</span><span class="p">])))</span> 
@@ -96,37 +102,133 @@
                 <span class="c"># unit cell parameters</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">abc</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="mi">6</span><span class="p">:</span><span class="mi">15</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">15</span><span class="p">:</span><span class="mi">24</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">24</span><span class="p">:</span><span class="mi">33</span><span class="p">]])</span> 
                 <span class="n">angles</span> <span class="o">=</span> <span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="mi">33</span><span class="p">:</span><span class="mi">40</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">40</span><span class="p">:</span><span class="mi">47</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">47</span><span class="p">:</span><span class="mi">54</span><span class="p">]]</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">angles</span> <span class="o">=</span> <span class="p">[</span><span class="n">radians</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">ang</span><span class="p">))</span> <span class="k">for</span> <span class="n">ang</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">]</span> 
+                <span class="bp">self</span><span class="o">.</span><span class="n">angles</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">radians</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">ang</span><span class="p">))</span> <span class="k">for</span> <span class="n">ang</span> <span class="ow">in</span> <span class="n">angles</span><span class="p">]</span> 
                 
             <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;SCALE&#39;</span><span class="p">):</span>
-                <span class="c"># deorthoganlisation &#39;SCALE&#39; matrix </span>
+                <span class="c"># deorthoganlisation &#39;SCALE&#39; matrix</span>
+                <span class="c">#self.offset.append(float(line[45:55])) </span>
+                <span class="k">assert</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">45</span><span class="p">:</span><span class="mi">55</span><span class="p">])</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;Non-zero offset?&#39;</span> 
                 <span class="n">row</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="p">[</span><span class="n">line</span><span class="p">[</span><span class="mi">10</span><span class="p">:</span><span class="mi">20</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">20</span><span class="p">:</span><span class="mi">30</span><span class="p">],</span> <span class="n">line</span><span class="p">[</span><span class="mi">30</span><span class="p">:</span><span class="mi">40</span><span class="p">]])</span>
                 <span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">row</span><span class="p">)</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">offset</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">45</span><span class="p">:</span><span class="mi">55</span><span class="p">]))</span> 
-                <span class="k">assert</span> <span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">45</span><span class="p">:</span><span class="mi">55</span><span class="p">])</span> <span class="o">==</span> <span class="mf">0.</span><span class="p">,</span> <span class="s">&#39;Non-zero offset?&#39;</span>
                 
             <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;REMARK 290   SMTRY&#39;</span><span class="p">):</span>
                 <span class="c"># rotation and translation matricies for cartesian/world basis</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">Rw</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">7</span><span class="p">]))</span>
-                <span class="bp">self</span><span class="o">.</span><span class="n">Tw</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">7</span><span class="p">]))</span>
+                <span class="n">Rw</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">float</span><span class="p">,</span> <span class="n">line</span><span class="p">[</span><span class="mi">4</span><span class="p">:</span><span class="mi">7</span><span class="p">]))</span>
+                <span class="n">Tw</span><span class="p">[</span><span class="nb">int</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">3</span><span class="p">])]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">7</span><span class="p">]))</span>
                 
             <span class="k">elif</span> <span class="n">line</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s">&#39;REMARK 290&#39;</span><span class="p">):</span>
                 <span class="c"># symbolic symetry operator for crystallographic basis</span>
                 <span class="n">line</span> <span class="o">=</span> <span class="n">line</span><span class="o">.</span><span class="n">split</span><span class="p">()</span>
                 <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span> <span class="ow">and</span> <span class="n">line</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">isdigit</span><span class="p">():</span>
                     <span class="bp">self</span><span class="o">.</span><span class="n">symops</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">line</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-                    
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">Rw</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;No symmetry operators found in PDB file&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;No SCALE matrix found in PDB file&#39;</span><span class="p">)</span>
-        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;abc&#39;</span><span class="p">):</span>
-            <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;No CRYST1 record found in PDB file&#39;</span><span class="p">)</span>
+        
+        <span class="c"># make sure file has everything we expect</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="n">Rw</span><span class="p">):</span> <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;No symmetry operators in PDB file&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">):</span> <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;No SCALE matrix in PDB file&#39;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">hasattr</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="s">&#39;abc&#39;</span><span class="p">):</span> <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span><span class="s">&#39;No CRYST1 record in PDB file&#39;</span><span class="p">)</span>
 
-
+        <span class="c"># convert lists to numpy arrays</span>
+        <span class="k">for</span> <span class="n">var</span> <span class="ow">in</span> <span class="p">[</span><span class="s">&#39;xw&#39;</span><span class="p">,</span> <span class="s">&#39;yw&#39;</span><span class="p">,</span> <span class="s">&#39;zw&#39;</span><span class="p">,</span> <span class="s">&#39;n&#39;</span><span class="p">,</span> <span class="s">&#39;Biso&#39;</span><span class="p">,</span> <span class="s">&#39;e&#39;</span><span class="p">,</span> <span class="s">&#39;S&#39;</span><span class="p">]:</span> 
+            <span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="n">var</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="nb">vars</span><span class="p">(</span><span class="bp">self</span><span class="p">)[</span><span class="n">var</span><span class="p">])</span>
+        <span class="k">for</span> <span class="n">key</span> <span class="ow">in</span> <span class="n">Rw</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">Rw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Rw</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">tw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">tw</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
 </div>
-<div class="viewcode-block" id="calc_hmax"><a class="viewcode-back" href="../strufac.html#strufac.calc_hmax">[docs]</a><span class="k">def</span> <span class="nf">calc_hmax</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_fracsymop"><a class="viewcode-back" href="../strufac.html#strufac.calc_fracsymop">[docs]</a><span class="k">def</span> <span class="nf">calc_fracsymop</span><span class="p">(</span><span class="n">pdb</span><span class="p">):</span>
+    <span class="sd">r&#39;&#39;&#39;Transform the symmetry opertators into the fractional </span>
+<span class="sd">    crystallographic basis:</span>
+<span class="sd">    .. math::</span>
+<span class="sd">       R_c &amp;= \mathbf{SR}_w\mathbf{S}^I \\</span>
+<span class="sd">       t_c &amp;= \mathbf{S}t_w</span>
+
+<span class="sd">    :param: Instance of :class: `ParsePDB &lt;ParsePBD&gt;`</span>
+<span class="sd">    :returns: rotation matrix and translation vector lists ``(Rc, tc)``</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">S</span> <span class="o">=</span> <span class="n">pdb</span><span class="o">.</span><span class="n">S</span>
+    <span class="n">SI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+    <span class="n">Rc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Rw</span><span class="p">,</span> <span class="n">SI</span><span class="p">)</span>
+    <span class="n">tc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tw</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Rc</span><span class="p">,</span> <span class="n">tc</span>
+</div>
+<div class="viewcode-block" id="calc_fraccoord"><a class="viewcode-back" href="../strufac.html#strufac.calc_fraccoord">[docs]</a><span class="k">def</span> <span class="nf">calc_fraccoord</span><span class="p">(</span><span class="n">pdb</span><span class="p">):</span>
+    <span class="sd">r&#39;&#39;&#39;Transform the coordinates into the fractional crystallographic basis</span>
+<span class="sd">    .. math::</span>
+<span class="sd">       \begin{bmatrix} x_c \\ y_c \\ z_c \end{bmatrix} = \mathbf{S} </span>
+<span class="sd">       \begin{bmatrix} x_w \\ y_w \\ z_w</span>
+
+<span class="sd">    :param: Instance of :class: `ParsePDB &lt;ParsePBD&gt;`</span>
+<span class="sd">    :returns: transformed coordinates (xc, yc, zc)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">Xw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">((</span><span class="n">pdb</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
+    <span class="n">Xc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">Xw</span><span class="p">)</span>
+    <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">zc</span> <span class="o">=</span> <span class="n">Xc</span>
+    <span class="k">return</span> <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">zc</span>
+</div>
+<div class="viewcode-block" id="calc_hklmax"><a class="viewcode-back" href="../strufac.html#strufac.calc_hklmax">[docs]</a><span class="k">def</span> <span class="nf">calc_hklmax</span><span class="p">(</span><span class="n">pdb</span><span class="p">,</span> <span class="n">dmin</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">hmax</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="n">dmin</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="c"># calc_d(ST,[dmin,0,0])</span>
+    <span class="n">kmax</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="n">dmin</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="mi">1</span><span class="p">]))</span>
+    <span class="n">lmax</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="n">dmin</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="mi">2</span><span class="p">]))</span>
+    <span class="k">return</span> <span class="n">hmax</span><span class="p">,</span> <span class="n">kmax</span><span class="p">,</span> <span class="n">lmax</span>
+</div>
+<div class="viewcode-block" id="calc_d"><a class="viewcode-back" href="../strufac.html#strufac.calc_d">[docs]</a><span class="k">def</span> <span class="nf">calc_d</span><span class="p">(</span><span class="n">ST</span><span class="p">,</span> <span class="n">hkl</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;Calculate the resolution corresponding to a given reflection</span>
+<span class="sd">    </span>
+<span class="sd">    :param ST: transposed scale matrix</span>
+<span class="sd">    :param hkl: Miller index of the reflection/structure factor</span>
+<span class="sd">    :return: corresponding interplanar spacing (resolution)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="generate_hkl"><a class="viewcode-back" href="../strufac.html#strufac.generate_hkl">[docs]</a><span class="k">def</span> <span class="nf">generate_hkl</span><span class="p">(</span><span class="n">pdb</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">1e+6</span><span class="p">):</span>
+    <span class="sd">r&#39;&#39;&#39;List hkl indicies that fall within a range [dmin, dmax]</span>
+<span class="sd">    also calculate the corresponding d-spacing and sin theta over </span>
+<span class="sd">    lambda where,</span>
+
+<span class="sd">    .. math ::</span>
+<span class="sd">      \frac{\sin(\theta)}{\lambda} = \frac{1}{2d}</span>
+
+<span class="sd">    :param pdb: instance of :class: `ParsePDB &lt;ParsePDB&gt;`</span>
+<span class="sd">    :param dmin: minimum resolution (interplanar distance)</span>
+<span class="sd">    :param dmax: optional maximum resolution (interplanar distance) </span>
+<span class="sd">    :type dmin: float</span>
+<span class="sd">    :type dmin: float</span>
+<span class="sd">    :yield: (h,k,l) (d,stol)</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">ST</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
+    <span class="n">hmax</span><span class="p">,</span><span class="n">kmax</span><span class="p">,</span><span class="n">lmax</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="nb">int</span><span class="p">,</span> <span class="n">calc_hklmax</span><span class="p">(</span><span class="n">pdb</span><span class="p">,</span> <span class="n">dmin</span><span class="p">))</span>
+
+    <span class="c">#for h in xrange(hmax):</span>
+    <span class="c">#    for k in xrange(kmax):</span>
+    <span class="c">#        for l in xrange(lmax):</span>
+    <span class="c">#            d = calc_d(ST, [h,k,l])</span>
+    <span class="c">#            if dmin &lt;= d &lt;= dmax:</span>
+    <span class="c">#                stol = 1./(2*d) </span>
+    <span class="c">#                yield (h,k,l),(d,stol)</span>
+    <span class="c">#            elif dmin &gt; d:</span>
+    <span class="c">#                break</span>
+</div>
+<div class="viewcode-block" id="calc_hRs"><a class="viewcode-back" href="../strufac.html#strufac.calc_hRs">[docs]</a><span class="k">def</span> <span class="nf">calc_hRs</span><span class="p">():</span>
+    <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="calc_hTs"><a class="viewcode-back" href="../strufac.html#strufac.calc_hTs">[docs]</a><span class="k">def</span> <span class="nf">calc_hTs</span><span class="p">():</span>
+    <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="calc_recipunit"><a class="viewcode-back" href="../strufac.html#strufac.calc_recipunit">[docs]</a><span class="k">def</span> <span class="nf">calc_recipunit</span><span class="p">():</span>
+    <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="calc_scatfacs"><a class="viewcode-back" href="../strufac.html#strufac.calc_scatfacs">[docs]</a><span class="k">def</span> <span class="nf">calc_scatfacs</span><span class="p">():</span>
+    <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="is_enhanced"><a class="viewcode-back" href="../strufac.html#strufac.is_enhanced">[docs]</a><span class="k">def</span> <span class="nf">is_enhanced</span><span class="p">():</span>
+    <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="is_absent"><a class="viewcode-back" href="../strufac.html#strufac.is_absent">[docs]</a><span class="k">def</span> <span class="nf">is_absent</span><span class="p">():</span>
+    <span class="k">pass</span>
+</div>
+<div class="viewcode-block" id="is_centric"><a class="viewcode-back" href="../strufac.html#strufac.is_centric">[docs]</a><span class="k">def</span> <span class="nf">is_centric</span><span class="p">():</span>
     <span class="k">pass</span>
 
 <span class="c">#if __name__ == &#39;__main__&#39;:</span>
