@@ -93,8 +93,8 @@ As well as the ATOM and HETATM records the parser will extract:</p>
 to calculate the coordinates in the crystallographic basis:</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">pdb</span> <span class="o">=</span> <span class="n">ParsePDB</span><span class="p">(</span><span class="s">&#39;example.pdb&#39;</span><span class="p">)</span>
 <span class="k">for</span> <span class="n">xyz</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">xw</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">xw</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">zw</span><span class="p">):</span>
-    <span class="n">xyz_frac</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">xyz</span><span class="p">)</span>
-    <span class="k">print</span> <span class="n">xyz_frac</span>
+    <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">zc</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">xyz</span><span class="p">)</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">zc</span><span class="p">)</span>
 </pre></div>
 </div>
 </dd></dl>
