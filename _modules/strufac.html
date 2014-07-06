@@ -56,14 +56,15 @@
 <div class="viewcode-block" id="ParsePDB"><a class="viewcode-back" href="../strufac.html#strufac.ParsePDB">[docs]</a><span class="k">class</span> <span class="nc">ParsePDB</span><span class="p">:</span>
     <span class="sd">&#39;&#39;&#39;Parse a PDB file for info needed to calculate structure factors</span>
 <span class="sd">    The PDB is parsed according to the following `format described here`_.</span>
-<span class="sd">    As well as the ATOM and HETATM records the parser will extract:</span>
+<span class="sd">    As well as the atom and hetatm records the parser will extract:</span>
 <span class="sd">    </span>
-<span class="sd">    * The symmetry operators from the mandatory REMARK 290 record</span>
-<span class="sd">    * The unit cell parameters from the CRYST1 record</span>
-<span class="sd">    * The deorthoganilsation matrix from the SCALE record.</span>
+<span class="sd">    * The symmetry operators from the mandatory remark 290 record</span>
+<span class="sd">    * The unit cell parameters from the cryst1 record</span>
+<span class="sd">    * The deorthoganilsation matrix from the scale record.</span>
 
-<span class="sd">    A RuntimeError is raised if these are not available. We use the SCALE matrix</span>
-<span class="sd">    to transform the fractional coordinates </span>
+<span class="sd">    A RuntimeError is raised if these are not available. We use the scale matrix</span>
+<span class="sd">    to transform the world coordinates and symmetry operators to the fractional </span>
+<span class="sd">    basis.</span>
 
 <span class="sd">    :param str pdbfile: path to a PDB file</span>
 <span class="sd">    :return: instance of :class:`ParsePDB &lt;ParsePDB&gt;` with the following attributes</span>
