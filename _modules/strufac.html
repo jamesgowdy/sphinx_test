@@ -62,21 +62,27 @@
 <span class="sd">    * The unit cell parameters from the CRYST1 record</span>
 <span class="sd">    * The deorthoganilsation matrix from the SCALE record.</span>
 
-<span class="sd">    A RuntimeError is raised if these are not available. </span>
+<span class="sd">    A RuntimeError is raised if these are not available. We use the SCALE matrix</span>
+<span class="sd">    to transform the fractional coordinates </span>
 
 <span class="sd">    :param str pdbfile: path to a PDB file</span>
 <span class="sd">    :return: instance of :class:`ParsePDB &lt;ParsePDB&gt;` with the following attributes</span>
 <span class="sd">    :ivar xw: x-coordinate (cartesian world basis)</span>
 <span class="sd">    :ivar yw: y-coordinate (cartesian world basis)</span>
 <span class="sd">    :ivar zw: z-coordinate (cartesian world basis)</span>
+<span class="sd">    :ivar xc: x-coordinate (fractional crystallographic basis)</span>
+<span class="sd">    :ivar yc: y-coordinate (fractional crystallographic basis)</span>
+<span class="sd">    :ivar zc: z-coordinate (fractional crystallographic basis)</span>
 <span class="sd">    :ivar n: atomic occupancies</span>
 <span class="sd">    :ivar Biso: isotropic B-factors</span>
 <span class="sd">    :ivar e: element symbol</span>
 <span class="sd">    :ivar S: deorthoganlisation (SCALE) matrix</span>
 <span class="sd">    :ivar abc: unit cell lengths (in Angstroms)</span>
 <span class="sd">    :ivar angles: unit cell angles (in radians) </span>
-<span class="sd">    :ivar Rw: symmetry operator rotation matricies for cartesian basis </span>
-<span class="sd">    :ivar tw: symmetry operator translation vector for catesian basis</span>
+<span class="sd">    :ivar Rw: list of symops rotation matricies for cartesian basis </span>
+<span class="sd">    :ivar tw: list of symops translation vectors for catesian basis</span>
+<span class="sd">    :ivar Rc: list of symops rotation matricies for crystallographic basis</span>
+<span class="sd">    :ivar tc: list of symops operator translation vectors for crystallographic basis </span>
 
 <span class="sd">    .. _format described here: http://deposit.rcsb.org/adit/docs/pdb_atom_format.html</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -138,29 +144,37 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">Rw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">Rw</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
             <span class="bp">self</span><span class="o">.</span><span class="n">tw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">tw</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
 
-<div class="viewcode-block" id="ParsePDB.frac_symops"><a class="viewcode-back" href="../strufac.html#strufac.ParsePDB.frac_symops">[docs]</a>    <span class="k">def</span> <span class="nf">frac_symops</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
-        <span class="sd">r&#39;&#39;&#39;Transform the symmetry opertators into the fractional crystallographic basis</span>
-
-<span class="sd">        :return: rotation matrix and translation vector lists ``(Rc, tc)``</span>
-<span class="sd">        &#39;&#39;&#39;</span>
+        <span class="c"># transform to coords and symops to crystallographic fractional basis </span>
+        <span class="n">Xw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">xc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">zc</span> <span class="o">=</span> <span class="n">frac_coords</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">Xw</span><span class="p">)</span>
         <span class="n">SI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
-        <span class="n">Rc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">Rw</span><span class="p">,</span> <span class="n">SI</span><span class="p">)</span>
-        <span class="n">tc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">tw</span><span class="p">)</span>
-        <span class="k">return</span> <span class="n">Rc</span><span class="p">,</span> <span class="n">tc</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">Rc</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="n">SI</span><span class="p">)</span> <span class="k">for</span> <span class="n">R</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Rw</span><span class="p">]</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">tc</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">tw</span><span class="p">)</span> <span class="k">for</span> <span class="n">tw</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">tw</span><span class="p">]</span>
 </div>
-<div class="viewcode-block" id="ParsePDB.frac_coords"><a class="viewcode-back" href="../strufac.html#strufac.ParsePDB.frac_coords">[docs]</a>    <span class="k">def</span> <span class="nf">frac_coords</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">xyz</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
-        <span class="sd">r&#39;&#39;&#39;Transform cartesian world coordinates into the fractional </span>
-<span class="sd">        crystallographic basis if no vector is provided the parsed world coordinates </span>
-<span class="sd">        are transformed and a matrix of fractional coordinates with dimensions *(3, N)*</span>
-<span class="sd">        is returned.</span>
+<div class="viewcode-block" id="frac_symops"><a class="viewcode-back" href="../strufac.html#strufac.frac_symops">[docs]</a><span class="k">def</span> <span class="nf">frac_symops</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">Rw</span><span class="p">,</span> <span class="n">tw</span><span class="p">):</span>
+    <span class="sd">r&#39;&#39;&#39;Transform the symmetry opertators for use with coordinates in the </span>
+<span class="sd">    fractional crystallographic basis</span>
 
-<span class="sd">        :param xyz: Optional world coordinate vector</span>
-<span class="sd">        :return: transformed fractional coordinates </span>
-<span class="sd">        &#39;&#39;&#39;</span>
-        <span class="k">if</span> <span class="n">xyz</span> <span class="ow">is</span> <span class="bp">None</span><span class="p">:</span>
-            <span class="n">xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">((</span><span class="bp">self</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
-        <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">xyz</span><span class="p">)</span>
-</div></div>
+<span class="sd">    :param S: scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
+<span class="sd">    :param Rw: a rotation matrix (cartesian world basis)</span>
+<span class="sd">    :param tw: a translation vector (cartesian world basis)</span>
+<span class="sd">    :return: transformed rotation matrix and translation vector ``(Rc, tc)``</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">SI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
+    <span class="n">Rc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">Rw</span><span class="p">,</span> <span class="n">SI</span><span class="p">)</span>
+    <span class="n">tc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">tw</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Rc</span><span class="p">,</span> <span class="n">tc</span>
+</div>
+<div class="viewcode-block" id="frac_coords"><a class="viewcode-back" href="../strufac.html#strufac.frac_coords">[docs]</a><span class="k">def</span> <span class="nf">frac_coords</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">xyz</span><span class="p">):</span>
+    <span class="sd">r&#39;&#39;&#39;Transform cartesian world coordinates into the fractional </span>
+<span class="sd">    crystallographic basis.</span>
+
+<span class="sd">    :param S: scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
+<span class="sd">    :param xyz: coordinate vector with te coefficents expressed in the certesian basis</span>
+<span class="sd">    :return: transformed fractional coordinates </span>
+<span class="sd">    &#39;&#39;&#39;</span>        
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">xyz</span><span class="p">)</span>
+</div>
 <div class="viewcode-block" id="calc_hklmax"><a class="viewcode-back" href="../strufac.html#strufac.calc_hklmax">[docs]</a><span class="k">def</span> <span class="nf">calc_hklmax</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">dmin</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Calculate a maximum bound on hkl corresponding to a minimum resolution</span>
 <span class="sd">    i.e. the reciprocal lengths of the vectors colinear with the unit cell </span>

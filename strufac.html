@@ -68,7 +68,8 @@ As well as the ATOM and HETATM records the parser will extract:</p>
 <li>The unit cell parameters from the CRYST1 record</li>
 <li>The deorthoganilsation matrix from the SCALE record.</li>
 </ul>
-<p>A RuntimeError is raised if these are not available.</p>
+<p>A RuntimeError is raised if these are not available. We use the SCALE matrix
+to transform the fractional coordinates</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -83,52 +84,24 @@ As well as the ATOM and HETATM records the parser will extract:</p>
 <li><strong>xw</strong> &#8211; x-coordinate (cartesian world basis)</li>
 <li><strong>yw</strong> &#8211; y-coordinate (cartesian world basis)</li>
 <li><strong>zw</strong> &#8211; z-coordinate (cartesian world basis)</li>
+<li><strong>xc</strong> &#8211; x-coordinate (fractional crystallographic basis)</li>
+<li><strong>yc</strong> &#8211; y-coordinate (fractional crystallographic basis)</li>
+<li><strong>zc</strong> &#8211; z-coordinate (fractional crystallographic basis)</li>
 <li><strong>n</strong> &#8211; atomic occupancies</li>
 <li><strong>Biso</strong> &#8211; isotropic B-factors</li>
 <li><strong>e</strong> &#8211; element symbol</li>
 <li><strong>S</strong> &#8211; deorthoganlisation (SCALE) matrix</li>
 <li><strong>abc</strong> &#8211; unit cell lengths (in Angstroms)</li>
 <li><strong>angles</strong> &#8211; unit cell angles (in radians)</li>
-<li><strong>Rw</strong> &#8211; symmetry operator rotation matricies for cartesian basis</li>
-<li><strong>tw</strong> &#8211; symmetry operator translation vector for catesian basis</li>
+<li><strong>Rw</strong> &#8211; list of symops rotation matricies for cartesian basis</li>
+<li><strong>tw</strong> &#8211; list of symops translation vectors for catesian basis</li>
+<li><strong>Rc</strong> &#8211; list of symops rotation matricies for crystallographic basis</li>
+<li><strong>tc</strong> &#8211; list of symops operator translation vectors for crystallographic basis</li>
 </ul>
 </td>
 </tr>
 </tbody>
 </table>
-<dl class="method">
-<dt id="strufac.ParsePDB.frac_coords">
-<tt class="descname">frac_coords</tt><big>(</big><em>xyz=None</em><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB.frac_coords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB.frac_coords" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform cartesian world coordinates into the fractional 
-crystallographic basis if no vector is provided the parsed world coordinates 
-are transformed and a matrix of fractional coordinates with dimensions <em>(3, N)</em>
-is returned.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>xyz</strong> &#8211; Optional world coordinate vector</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">transformed fractional coordinates</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="method">
-<dt id="strufac.ParsePDB.frac_symops">
-<tt class="descname">frac_symops</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB.frac_symops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB.frac_symops" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform the symmetry opertators into the fractional crystallographic basis</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Returns:</th><td class="field-body">rotation matrix and translation vector lists <tt class="docutils literal"><span class="pre">(Rc,</span> <span class="pre">tc)</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="function">
@@ -230,6 +203,51 @@ basis vectors scaled by <em>dmin</em>.</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>as a scalar or a numpy.ndarray</em>) &#8211; the interplanar distance</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strufac.frac_coords">
+<tt class="descclassname">strufac.</tt><tt class="descname">frac_coords</tt><big>(</big><em>S</em>, <em>xyz</em><big>)</big><a class="reference internal" href="_modules/strufac.html#frac_coords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.frac_coords" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform cartesian world coordinates into the fractional 
+crystallographic basis.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>S</strong> &#8211; scale matrix from <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
+<li><strong>xyz</strong> &#8211; coordinate vector with te coefficents expressed in the certesian basis</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">transformed fractional coordinates</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strufac.frac_symops">
+<tt class="descclassname">strufac.</tt><tt class="descname">frac_symops</tt><big>(</big><em>S</em>, <em>Rw</em>, <em>tw</em><big>)</big><a class="reference internal" href="_modules/strufac.html#frac_symops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.frac_symops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the symmetry opertators for use with coordinates in the 
+fractional crystallographic basis</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>S</strong> &#8211; scale matrix from <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
+<li><strong>Rw</strong> &#8211; a rotation matrix (cartesian world basis)</li>
+<li><strong>tw</strong> &#8211; a translation vector (cartesian world basis)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">transformed rotation matrix and translation vector <tt class="docutils literal"><span class="pre">(Rc,</span> <span class="pre">tc)</span></tt></p>
+</td>
 </tr>
 </tbody>
 </table>
