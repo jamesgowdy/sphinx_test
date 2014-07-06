@@ -194,12 +194,9 @@
     <span class="k">pass</span>
 </div>
 <div class="viewcode-block" id="generate_hkl"><a class="viewcode-back" href="../strufac.html#strufac.generate_hkl">[docs]</a><span class="k">def</span> <span class="nf">generate_hkl</span><span class="p">(</span><span class="n">pdb</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
-    <span class="sd">r&#39;&#39;&#39;List hkl indicies that fall within a range [dmin, dmax]</span>
-<span class="sd">    also calculate the corresponding d-spacing and sin theta over </span>
-<span class="sd">    lambda where,</span>
-
-<span class="sd">    .. math ::</span>
-<span class="sd">      \frac{\sin(\theta)}{\lambda} = \frac{1}{2d}</span>
+    <span class="sd">r&#39;&#39;&#39;List hkl indicies that fall within a range [`dmin`, `dmax`]</span>
+<span class="sd">    also calculate the corresponding interplanara distance (`d`)</span>
+<span class="sd">    and :math: `\frac{\sin(\theta)}{\lambda}` (`stol`)</span>
 
 <span class="sd">    :param pdb: instance of :class: `ParsePDB &lt;ParsePDB&gt;`</span>
 <span class="sd">    :param dmin: minimum resolution (interplanar distance)</span>
