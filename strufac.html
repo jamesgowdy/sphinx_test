@@ -103,6 +103,8 @@ to calculate the coordinates in the crystallographic basis:</p>
 <dt id="strufac.calc_d">
 <tt class="descclassname">strufac.</tt><tt class="descname">calc_d</tt><big>(</big><em>ST</em>, <em>hkl</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_d" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate the resolution corresponding to a given reflection</p>
+<div class="math">
+\[d = \frac{1}{\|\mathbf{S}^T\mathbf{h}\|}\]</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -169,12 +171,35 @@ to calculate the coordinates in the crystallographic basis:</p>
 <dd></dd></dl>
 
 <dl class="function">
+<dt id="strufac.calc_hklist">
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_hklist</tt><big>(</big><em>pdb</em>, <em>dmin</em>, <em>dmax=1000.0</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_hklist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_hklist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a matrix of hkl indicies that fall within a resolution range 
+[<em>dmin</em>, <em>dmax</em>] as a 2D matrix with dimensions (3, N) also returns the 
+corresponding interplanar distances (<em>d</em>) as a vector of length N</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pdb</strong> &#8211; instance of <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
+<li><strong>dmin</strong> (<em>float</em>) &#8211; minimum resolution (interplanar distance)</li>
+<li><strong>dmax</strong> (<em>float</em>) &#8211; optional maximum resolution (interplanar distance)</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">(hkls, ds)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
 <dt id="strufac.calc_hklmax">
 <tt class="descclassname">strufac.</tt><tt class="descname">calc_hklmax</tt><big>(</big><em>pdb</em>, <em>dmin</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_hklmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_hklmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate a maximum bound on hkl corresponding to a minimum resolution
 i.e. the reciprocal lengths of the vectors colinear with the unit cell 
-basis vectors scaled by <em>dmin</em>. This is explained in step 9 of my notes on 
-<a class="reference external" href="http://nbviewer.ipython.org/github/jamesgowdy/biophys/blob/master/sf_directsum.ipynb">structure factor calculation</a>.</p>
+basis vectors scaled by <em>dmin</em>.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -203,27 +228,25 @@ basis vectors scaled by <em>dmin</em>. This is explained in step 9 of my notes o
 <dd></dd></dl>
 
 <dl class="function">
-<dt id="strufac.generate_hkl">
-<tt class="descclassname">strufac.</tt><tt class="descname">generate_hkl</tt><big>(</big><em>pdb</em>, <em>dmin</em>, <em>dmax=1000.0</em><big>)</big><a class="reference internal" href="_modules/strufac.html#generate_hkl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.generate_hkl" title="Permalink to this definition">¶</a></dt>
-<dd><p>List hkl indicies that fall within a resolution range 
-[<em>dmin</em>, <em>dmax</em>] also returning the corresponding interplanar 
-distance (<em>d</em>) and <span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span> (<em>stol</em>)</p>
-<table class="docutils field-list" frame="void" rules="none">
+<dt id="strufac.calc_stol">
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_stol</tt><big>(</big><em>d</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_stol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_stol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Convert resolution to :math:`
+rac{sin( heta)}{lambda}`</p>
+<blockquote>
+<div><table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>pdb</strong> &#8211; instance of <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
-<li><strong>dmin</strong> (<em>float</em>) &#8211; minimum resolution (interplanar distance)</li>
-<li><strong>dmax</strong> (<em>float</em>) &#8211; optional maximum resolution (interplanar distance)</li>
-</ul>
-</td>
+<tr class="field-odd field"><th class="field-name">param d:</th><td class="field-body"></td>
 </tr>
-<tr class="field-even field"><th class="field-name">Yield :</th><td class="field-body"><p class="first last">(h,k,l) (d,stol)</p>
-</td>
+<tr class="field-even field"><th class="field-name">type d:</th><td class="field-body">numpy.ndarray of scalar float</td>
+</tr>
+<tr class="field-odd field"><th class="field-name">return:</th><td class="field-body">:math:<a href="#id1"><span class="problematic" id="id2">`</span></a></td>
 </tr>
 </tbody>
 </table>
+</div></blockquote>
+<p>rac{sin(  heta)}{lambda}`</p>
 </dd></dl>
 
 <dl class="function">
