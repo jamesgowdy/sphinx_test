@@ -153,7 +153,7 @@
 <span class="sd">      \mathbf{R}_c &amp;= \mathbf{SR}_w\mathbf{S}^{-1} \\</span>
 <span class="sd">      \mathbf{t}_c &amp;= \mathbf{S}\mathbf{t}_w</span>
 
-<span class="sd">    :param: Instance of :class:`ParsePDB &lt;ParsePDB&gt;`</span>
+<span class="sd">    :param pdb: Instance of :class:`ParsePDB &lt;ParsePDB&gt;`</span>
 <span class="sd">    :return: rotation matrix and translation vector lists ``(Rc, tc)``</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">S</span> <span class="o">=</span> <span class="n">pdb</span><span class="o">.</span><span class="n">S</span>
@@ -169,7 +169,7 @@
 <span class="sd">      \begin{bmatrix} x_c \\ y_c \\ z_c \end{bmatrix} = \mathbf{S}</span>
 <span class="sd">      \begin{bmatrix} x_w \\ y_w \\ z_w \end{bmatrix}</span>
 
-<span class="sd">    :param: Instance of :class:`ParsePDB &lt;ParsePDB&gt;`</span>
+<span class="sd">    :param pdb: Instance of :class:`ParsePDB &lt;ParsePDB&gt;`</span>
 <span class="sd">    :return: transformed coordinates ``(xc, yc, zc)``</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">Xw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">((</span><span class="n">pdb</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
@@ -184,8 +184,7 @@
 <span class="sd">    `structure factor calculation`_.</span>
 
 <span class="sd">    :param pdb: instance of :class:`ParsePDB &lt;ParsePDB&gt;`</span>
-<span class="sd">    :param dmin: minimum interplanar distance of interest</span>
-<span class="sd">    :type dmin: float</span>
+<span class="sd">    :param float dmin: minimum interplanar distance of interest</span>
 <span class="sd">    :return: Miller indicies as a tuple: ``(hmax, kmax, lmax)``</span>
 
 <span class="sd">    .. _structure factor calculation: http://nbviewer.ipython.org/github/jamesgowdy/biophys/blob/master/sf_directsum.ipynb</span>
@@ -210,10 +209,8 @@
 <span class="sd">    distance (*d*) and :math:`\frac{\sin(\theta)}{\lambda}` (*stol*)</span>
 
 <span class="sd">    :param pdb: instance of :class:`ParsePDB &lt;ParsePDB&gt;`</span>
-<span class="sd">    :param dmin: minimum resolution (interplanar distance)</span>
-<span class="sd">    :param dmax: optional maximum resolution (interplanar distance) </span>
-<span class="sd">    :type dmin: float</span>
-<span class="sd">    :type dmax: float</span>
+<span class="sd">    :param float dmin: minimum resolution (interplanar distance)</span>
+<span class="sd">    :param float dmax: optional maximum resolution (interplanar distance) </span>
 <span class="sd">    :yield: (h,k,l) (d,stol)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">ST</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">)</span>
