@@ -61,9 +61,10 @@
 <span class="sd">    * The unit cell parameters from the CRYST1 record</span>
 <span class="sd">    * The deorthoganilsation matrix from the SCALE record.</span>
 
-<span class="sd">    A |RuntimeError| is raised is these are not available. Once parsed the </span>
-<span class="sd">    attributes are accessed ::</span>
+<span class="sd">    A RuntimeError is raised is these are not available. Once parsed the </span>
+<span class="sd">    attributes are accessed</span>
 
+<span class="sd">    ::</span>
 <span class="sd">    pdb = ParsePDB(&#39;example.pdb&#39;)</span>
 <span class="sd">    for xw, yw, zw in zip(pdb.xw, pdb.xw, pdb.zw):</span>
 <span class="sd">        print xw, yw, zw</span>

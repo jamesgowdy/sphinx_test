@@ -64,9 +64,10 @@ As well as the ATOM and HETATM records the parser will extract:</p>
 <li>The unit cell parameters from the CRYST1 record</li>
 <li>The deorthoganilsation matrix from the SCALE record.</li>
 </ul>
-<p>A <a href="#id1"><span class="problematic" id="id2">|RuntimeError|</span></a> is raised is these are not available. Once parsed the 
+<p>A RuntimeError is raised is these are not available. Once parsed the 
 attributes are accessed</p>
-<p>pdb = ParsePDB(&#8216;example.pdb&#8217;)
+<p>::
+pdb = ParsePDB(&#8216;example.pdb&#8217;)
 for xw, yw, zw in zip(pdb.xw, pdb.xw, pdb.zw):</p>
 <blockquote>
 <div>print xw, yw, zw</div></blockquote>
