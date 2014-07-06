@@ -64,6 +64,12 @@ As well as the ATOM and HETATM records the parser will extract:</p>
 <li>The unit cell parameters from the CRYST1 record</li>
 <li>The deorthoganilsation matrix from the SCALE record.</li>
 </ul>
+<p>A <a href="#id1"><span class="problematic" id="id2">|RuntimeError|</span></a> is raised is these are not available. Once parsed the 
+attributes are accessed</p>
+<p>pdb = ParsePDB(&#8216;example.pdb&#8217;)
+for xw, yw, zw in zip(pdb.xw, pdb.xw, pdb.zw):</p>
+<blockquote>
+<div>print xw, yw, zw</div></blockquote>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -71,7 +77,7 @@ As well as the ATOM and HETATM records the parser will extract:</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>pdbfile</strong> (<em>str</em>) &#8211; path to a PDB file</p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first simple">
+<tr class="field-even field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
 <li><strong>xw</strong> &#8211; x-coordinate (cartesian world basis)</li>
 <li><strong>yw</strong> &#8211; y-coordinate (cartesian world basis)</li>
 <li><strong>zw</strong> &#8211; z-coordinate (cartesian world basis)</li>
@@ -83,14 +89,6 @@ As well as the ATOM and HETATM records the parser will extract:</p>
 <li><strong>angles</strong> &#8211; unit cell angles (in radians)</li>
 <li><strong>Rw</strong> &#8211; symmetry operator rotation matricies for cartesian basis</li>
 <li><strong>tw</strong> &#8211; symmetry operator translation vector for catesian basis</li>
-</ul>
-</td>
-</tr>
-<tr class="field-odd field"><th class="field-name">Raises:</th><td class="field-body"><ul class="first last simple">
-<li><strong>RuntimeError</strong> &#8211; if no REMARK 290 SYMTRY record found</li>
-<li><strong>RuntimeError</strong> &#8211; if no SCALE matrix found</li>
-<li><strong>RuntimeError</strong> &#8211; if no CRYST1 record found</li>
-<li><strong>AssertionError</strong> &#8211; if origin offset non-zero</li>
 </ul>
 </td>
 </tr>
