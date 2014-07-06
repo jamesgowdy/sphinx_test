@@ -171,7 +171,11 @@ to calculate the coordinates in the crystallographic basis:</p>
 <dl class="function">
 <dt id="strufac.calc_hklmax">
 <tt class="descclassname">strufac.</tt><tt class="descname">calc_hklmax</tt><big>(</big><em>pdb</em>, <em>dmin</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_hklmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_hklmax" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Calculate a maximum bound on hkl corresponding to a minimum resolution
+i.e. the reciprocal lengths of the vectors colinear with the unit cell 
+basis vectors scaled by <em>dmin</em>. This is explained in step 9 of my notes on 
+<a class="reference external" href="http://nbviewer.ipython.org/github/jamesgowdy/biophys/blob/master/sf_directsum.ipynb">structure factor calculation</a>.</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="strufac.calc_recipunit">
@@ -186,9 +190,9 @@ to calculate the coordinates in the crystallographic basis:</p>
 <dl class="function">
 <dt id="strufac.generate_hkl">
 <tt class="descclassname">strufac.</tt><tt class="descname">generate_hkl</tt><big>(</big><em>pdb</em>, <em>dmin</em>, <em>dmax=1000</em><big>)</big><a class="reference internal" href="_modules/strufac.html#generate_hkl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.generate_hkl" title="Permalink to this definition">¶</a></dt>
-<dd><p>List hkl indicies that fall within a range [<em>dmin</em>, <em>dmax</em>]
-also calculate the corresponding interplanar distance (<em>d</em>)
-and <span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span> (<em>stol</em>)</p>
+<dd><p>List hkl indicies that fall within a resolution range 
+[<em>dmin</em>, <em>dmax</em>] also returning the corresponding interplanar 
+distance (<em>d</em>) and <span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span> (<em>stol</em>)</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
