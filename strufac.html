@@ -26,7 +26,9 @@
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
-    <link rel="top" title="project_name  documentation" href="index.html" /> 
+    <link rel="top" title="project_name  documentation" href="index.html" />
+    <link rel="next" title="strufac2 Module" href="strufac2.html" />
+    <link rel="prev" title="calc Module" href="calc.html" /> 
   </head>
   <body>
     <div class="related">
@@ -38,6 +40,12 @@
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="strufac2.html" title="strufac2 Module"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="calc.html" title="calc Module"
+             accesskey="P">previous</a> |</li>
         <li><a href="index.html">project_name  documentation</a> &raquo;</li> 
       </ul>
     </div>  
@@ -51,7 +59,7 @@
 <span id="strufac-module"></span><h1>strufac Module<a class="headerlink" href="#module-strufac" title="Permalink to this headline">¶</a></h1>
 <dl class="class">
 <dt id="strufac.ParsePDB">
-<em class="property">class </em><tt class="descclassname">strufac.</tt><tt class="descname">ParsePDB</tt><big>(</big><em>pdbfile</em><big>)</big><a class="headerlink" href="#strufac.ParsePDB" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><tt class="descclassname">strufac.</tt><tt class="descname">ParsePDB</tt><big>(</big><em>pdbfile</em><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Parse a PDB file for info needed to calculate structure factors
 The PDB is parsed according to the following <a class="reference external" href="http://deposit.rcsb.org/adit/docs/pdb_atom_format.html">format described here</a>.
 As well as the ATOM and HETATM records the parser will extract:</p>
@@ -68,7 +76,7 @@ As well as the ATOM and HETATM records the parser will extract:</p>
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><p class="first"><strong>pdbfile</strong> (<em>str</em>) &#8211; path to a PDB file</p>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">instance of <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">instance of <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a> with the following attributes</p>
 </td>
 </tr>
 <tr class="field-odd field"><th class="field-name">Variables:</th><td class="field-body"><ul class="first last simple">
@@ -88,24 +96,13 @@ As well as the ATOM and HETATM records the parser will extract:</p>
 </tr>
 </tbody>
 </table>
-<p>Once parsed the above varibles can be accessed as attributes for example
-to calculate the coordinates in the crystallographic basis:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">pdb</span> <span class="o">=</span> <span class="n">ParsePDB</span><span class="p">(</span><span class="s">&#39;example.pdb&#39;</span><span class="p">)</span>
-<span class="k">for</span> <span class="n">xyz</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">xw</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">xw</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">zw</span><span class="p">):</span>
-    <span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">zc</span> <span class="o">=</span> <span class="n">numpy</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">xyz</span><span class="p">)</span>
-    <span class="k">print</span><span class="p">(</span><span class="n">xc</span><span class="p">,</span> <span class="n">yc</span><span class="p">,</span> <span class="n">zc</span><span class="p">)</span>
-</pre></div>
-</div>
 <dl class="method">
 <dt id="strufac.ParsePDB.frac_coords">
-<tt class="descname">frac_coords</tt><big>(</big><em>xyz=None</em><big>)</big><a class="headerlink" href="#strufac.ParsePDB.frac_coords" title="Permalink to this definition">¶</a></dt>
+<tt class="descname">frac_coords</tt><big>(</big><em>xyz=None</em><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB.frac_coords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB.frac_coords" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform cartesian world coordinates into the fractional 
-crystallographic basis using the matrix multiplication:</p>
-<div class="math">
-\[\begin{split}\begin{bmatrix} x_c \\ y_c \\ z_c \end{bmatrix} = \mathbf{S}
-\begin{bmatrix} x_w \\ y_w \\ z_w \end{bmatrix}\end{split}\]</div>
-<p>if no vector is provided the parsed world coordinates are transformed
-and a matrix of fractional coordinates with dimensions <em>(3, N)</em> is returned.</p>
+crystallographic basis if no vector is provided the parsed world coordinates 
+are transformed and a matrix of fractional coordinates with dimensions <em>(3, N)</em>
+is returned.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -120,10 +117,8 @@ and a matrix of fractional coordinates with dimensions <em>(3, N)</em> is return
 
 <dl class="method">
 <dt id="strufac.ParsePDB.frac_symops">
-<tt class="descname">frac_symops</tt><big>(</big><big>)</big><a class="headerlink" href="#strufac.ParsePDB.frac_symops" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform the symmetry opertators into the fractional crystallographic 
-basis using using the similarity transform <span class="math">\(\mathbf{R}_c = \mathbf{SR}_w\mathbf{S}^{-1}\)</span> 
-and matrix multipliction <span class="math">\(\mathbf{t}_c = \mathbf{S}\mathbf{t}_w\)</span></p>
+<tt class="descname">frac_symops</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB.frac_symops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB.frac_symops" title="Permalink to this definition">¶</a></dt>
+<dd><p>Transform the symmetry opertators into the fractional crystallographic basis</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -138,9 +133,8 @@ and matrix multipliction <span class="math">\(\mathbf{t}_c = \mathbf{S}\mathbf{t
 
 <dl class="function">
 <dt id="strufac.calc_d">
-<tt class="descclassname">strufac.</tt><tt class="descname">calc_d</tt><big>(</big><em>S</em>, <em>hkl</em><big>)</big><a class="headerlink" href="#strufac.calc_d" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the resolution corresponding to a given reflection using
-the formula <span class="math">\(d = \frac{1}{\|\mathbf{S}^T\mathbf{h}\|}\)</span></p>
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_d</tt><big>(</big><em>S</em>, <em>hkl</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_d"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_d" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the resolution corresponding to a given reflection</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -151,7 +145,7 @@ the formula <span class="math">\(d = \frac{1}{\|\mathbf{S}^T\mathbf{h}\|}\)</spa
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns d:</th><td class="field-body"><p class="first last">the interplanar distance(s)</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the interplanar distance(s)</p>
 </td>
 </tr>
 </tbody>
@@ -160,17 +154,17 @@ the formula <span class="math">\(d = \frac{1}{\|\mathbf{S}^T\mathbf{h}\|}\)</spa
 
 <dl class="function">
 <dt id="strufac.calc_hRs">
-<tt class="descclassname">strufac.</tt><tt class="descname">calc_hRs</tt><big>(</big><big>)</big><a class="headerlink" href="#strufac.calc_hRs" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_hRs</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_hRs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_hRs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="strufac.calc_hTs">
-<tt class="descclassname">strufac.</tt><tt class="descname">calc_hTs</tt><big>(</big><big>)</big><a class="headerlink" href="#strufac.calc_hTs" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_hTs</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_hTs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_hTs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="strufac.calc_hklist">
-<tt class="descclassname">strufac.</tt><tt class="descname">calc_hklist</tt><big>(</big><em>S</em>, <em>dmin</em>, <em>dmax=1000.0</em><big>)</big><a class="headerlink" href="#strufac.calc_hklist" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_hklist</tt><big>(</big><em>S</em>, <em>dmin</em>, <em>dmax=1000.0</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_hklist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_hklist" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a matrix of hkl indicies that fall within a resolution range 
 [<em>dmin</em>, <em>dmax</em>] as a 2D matrix with dimensions <em>(3, N)</em> also returns the 
 corresponding interplanar distances, <em>d</em>, as a vector of length <em>N</em></p>
@@ -194,7 +188,7 @@ corresponding interplanar distances, <em>d</em>, as a vector of length <em>N</em
 
 <dl class="function">
 <dt id="strufac.calc_hklmax">
-<tt class="descclassname">strufac.</tt><tt class="descname">calc_hklmax</tt><big>(</big><em>S</em>, <em>dmin</em><big>)</big><a class="headerlink" href="#strufac.calc_hklmax" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_hklmax</tt><big>(</big><em>S</em>, <em>dmin</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_hklmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_hklmax" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate a maximum bound on hkl corresponding to a minimum resolution
 i.e. the reciprocal lengths of the vectors colinear with the unit cell 
 basis vectors scaled by <em>dmin</em>.</p>
@@ -217,17 +211,17 @@ basis vectors scaled by <em>dmin</em>.</p>
 
 <dl class="function">
 <dt id="strufac.calc_recipunit">
-<tt class="descclassname">strufac.</tt><tt class="descname">calc_recipunit</tt><big>(</big><big>)</big><a class="headerlink" href="#strufac.calc_recipunit" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_recipunit</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_recipunit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_recipunit" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="strufac.calc_scatfacs">
-<tt class="descclassname">strufac.</tt><tt class="descname">calc_scatfacs</tt><big>(</big><big>)</big><a class="headerlink" href="#strufac.calc_scatfacs" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_scatfacs</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_scatfacs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_scatfacs" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="strufac.calc_stol">
-<tt class="descclassname">strufac.</tt><tt class="descname">calc_stol</tt><big>(</big><em>d</em><big>)</big><a class="headerlink" href="#strufac.calc_stol" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_stol</tt><big>(</big><em>d</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_stol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_stol" title="Permalink to this definition">¶</a></dt>
 <dd><p>Convert a interplanar distance to <span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -243,17 +237,17 @@ basis vectors scaled by <em>dmin</em>.</p>
 
 <dl class="function">
 <dt id="strufac.is_absent">
-<tt class="descclassname">strufac.</tt><tt class="descname">is_absent</tt><big>(</big><big>)</big><a class="headerlink" href="#strufac.is_absent" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">is_absent</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#is_absent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.is_absent" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="strufac.is_centric">
-<tt class="descclassname">strufac.</tt><tt class="descname">is_centric</tt><big>(</big><big>)</big><a class="headerlink" href="#strufac.is_centric" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">is_centric</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#is_centric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.is_centric" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="function">
 <dt id="strufac.is_enhanced">
-<tt class="descclassname">strufac.</tt><tt class="descname">is_enhanced</tt><big>(</big><big>)</big><a class="headerlink" href="#strufac.is_enhanced" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">is_enhanced</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#is_enhanced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.is_enhanced" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>
@@ -264,6 +258,12 @@ basis vectors scaled by <em>dmin</em>.</p>
       </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="calc.html"
+                        title="previous chapter">calc Module</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="strufac2.html"
+                        title="next chapter">strufac2 Module</a></p>
   <h3>This Page</h3>
   <ul class="this-page-menu">
     <li><a href="_sources/strufac.txt"
@@ -295,6 +295,12 @@ basis vectors scaled by <em>dmin</em>.</p>
         <li class="right" >
           <a href="py-modindex.html" title="Python Module Index"
              >modules</a> |</li>
+        <li class="right" >
+          <a href="strufac2.html" title="strufac2 Module"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="calc.html" title="calc Module"
+             >previous</a> |</li>
         <li><a href="index.html">project_name  documentation</a> &raquo;</li> 
       </ul>
     </div>
