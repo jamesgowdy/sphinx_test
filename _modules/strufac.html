@@ -149,8 +149,8 @@
     <span class="sd">r&#39;&#39;&#39;Transform the symmetry opertators into the fractional crystallographic basis</span>
 <span class="sd">    </span>
 <span class="sd">    .. math ::</span>
-<span class="sd">      R_c &amp;= \mathbf{SR}_w\mathbf{S}^I \\</span>
-<span class="sd">      t_c &amp;= \mathbf{S}t_w</span>
+<span class="sd">      \mathbf{R}_c &amp;= \mathbf{SR}_w\mathbf{S}^{-1} \\</span>
+<span class="sd">      \mathbf{t}_c &amp;= \mathbf{S}\mathbf{t}_w</span>
 
 <span class="sd">    :param: Instance of :class: `ParsePDB &lt;ParsePBD&gt;`</span>
 <span class="sd">    :return: rotation matrix and translation vector lists ``(Rc, tc)``</span>
@@ -195,7 +195,7 @@
 </div>
 <div class="viewcode-block" id="generate_hkl"><a class="viewcode-back" href="../strufac.html#strufac.generate_hkl">[docs]</a><span class="k">def</span> <span class="nf">generate_hkl</span><span class="p">(</span><span class="n">pdb</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
     <span class="sd">r&#39;&#39;&#39;List hkl indicies that fall within a range [*dmin*, *dmax*]</span>
-<span class="sd">    also calculate the corresponding interplanara distance (*d*)</span>
+<span class="sd">    also calculate the corresponding interplanar distance (*d*)</span>
 <span class="sd">    and :math:`\frac{\sin(\theta)}{\lambda}` (*stol*)</span>
 
 <span class="sd">    :param pdb: instance of :class: `ParsePDB &lt;ParsePDB&gt;`</span>
