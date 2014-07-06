@@ -139,14 +139,15 @@
             <span class="bp">self</span><span class="o">.</span><span class="n">tw</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">tw</span><span class="p">[</span><span class="n">key</span><span class="p">]))</span>
 </div>
 <div class="viewcode-block" id="calc_fracsymop"><a class="viewcode-back" href="../strufac.html#strufac.calc_fracsymop">[docs]</a><span class="k">def</span> <span class="nf">calc_fracsymop</span><span class="p">(</span><span class="n">pdb</span><span class="p">):</span>
-    <span class="sd">r&#39;&#39;&#39;Transform the symmetry opertators into the fractional </span>
-<span class="sd">    crystallographic basis:</span>
-<span class="sd">    .. math::</span>
-<span class="sd">       R_c &amp;= \mathbf{SR}_w\mathbf{S}^I \\</span>
-<span class="sd">       t_c &amp;= \mathbf{S}t_w</span>
+    <span class="sd">r&#39;&#39;&#39;List hkl indicies that fall within a range [dmin, dmax]</span>
+<span class="sd">    also calculate the corresponding d-spacing and sin theta over </span>
+<span class="sd">    lambda where,</span>
 
-<span class="sd">    :param: Instance of :class: `ParsePDB &lt;ParsePBD&gt;`</span>
-<span class="sd">    :returns: rotation matrix and translation vector lists ``(Rc, tc)``</span>
+<span class="sd">    .. math ::</span>
+<span class="sd">      \frac{\sin(\theta)}{\lambda} = \frac{1}{2d}</span>
+<span class="sd">    </span>
+<span class="sd">    :param: Instance of ParsePDB</span>
+<span class="sd">    :return: rotation matrix and translation vector lists ``(Rc, tc)``</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">S</span> <span class="o">=</span> <span class="n">pdb</span><span class="o">.</span><span class="n">S</span>
     <span class="n">SI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
@@ -156,12 +157,13 @@
 </div>
 <div class="viewcode-block" id="calc_fraccoord"><a class="viewcode-back" href="../strufac.html#strufac.calc_fraccoord">[docs]</a><span class="k">def</span> <span class="nf">calc_fraccoord</span><span class="p">(</span><span class="n">pdb</span><span class="p">):</span>
     <span class="sd">r&#39;&#39;&#39;Transform the coordinates into the fractional crystallographic basis</span>
-<span class="sd">    .. math::</span>
-<span class="sd">       \begin{bmatrix} x_c \\ y_c \\ z_c \end{bmatrix} = \mathbf{S} </span>
-<span class="sd">       \begin{bmatrix} x_w \\ y_w \\ z_w</span>
+
+<span class="sd">    .. math ::</span>
+<span class="sd">      \begin{bmatrix} x_c \\ y_c \\ z_c \end{bmatrix} = \mathbf{S} \\</span>
+<span class="sd">      \begin{bmatrix} x_w \\ y_w \\ z_w</span>
 
 <span class="sd">    :param: Instance of :class: `ParsePDB &lt;ParsePBD&gt;`</span>
-<span class="sd">    :returns: transformed coordinates (xc, yc, zc)</span>
+<span class="sd">    :return: transformed coordinates (xc, yc, zc)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">Xw</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">((</span><span class="n">pdb</span><span class="o">.</span><span class="n">x</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">y</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">z</span><span class="p">))</span>
     <span class="n">Xc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">Xw</span><span class="p">)</span>
@@ -185,7 +187,7 @@
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">pass</span>
 </div>
-<div class="viewcode-block" id="generate_hkl"><a class="viewcode-back" href="../strufac.html#strufac.generate_hkl">[docs]</a><span class="k">def</span> <span class="nf">generate_hkl</span><span class="p">(</span><span class="n">pdb</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mf">1e+6</span><span class="p">):</span>
+<div class="viewcode-block" id="generate_hkl"><a class="viewcode-back" href="../strufac.html#strufac.generate_hkl">[docs]</a><span class="k">def</span> <span class="nf">generate_hkl</span><span class="p">(</span><span class="n">pdb</span><span class="p">,</span> <span class="n">dmin</span><span class="p">,</span> <span class="n">dmax</span><span class="o">=</span><span class="mi">1000</span><span class="p">):</span>
     <span class="sd">r&#39;&#39;&#39;List hkl indicies that fall within a range [dmin, dmax]</span>
 <span class="sd">    also calculate the corresponding d-spacing and sin theta over </span>
 <span class="sd">    lambda where,</span>

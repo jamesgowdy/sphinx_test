@@ -119,11 +119,10 @@ record; the deorthoganilsation matrix is extracted from the SCALE record.</p>
 <dl class="function">
 <dt id="strufac.calc_fraccoord">
 <tt class="descclassname">strufac.</tt><tt class="descname">calc_fraccoord</tt><big>(</big><em>pdb</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_fraccoord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_fraccoord" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform the coordinates into the fractional crystallographic basis
-.. math:</p>
-<div class="highlight-python"><pre>\begin{bmatrix} x_c \\ y_c \\ z_c \end{bmatrix} = \mathbf{S} 
-\begin{bmatrix} x_w \\ y_w \\ z_w</pre>
-</div>
+<dd><p>Transform the coordinates into the fractional crystallographic basis</p>
+<div class="math">
+\[\begin{split}\begin{bmatrix} x_c \\ y_c \\ z_c \end{bmatrix} = \mathbf{S} \\
+\begin{bmatrix} x_w \\ y_w \\ z_w\end{split}\]</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -139,17 +138,16 @@ record; the deorthoganilsation matrix is extracted from the SCALE record.</p>
 <dl class="function">
 <dt id="strufac.calc_fracsymop">
 <tt class="descclassname">strufac.</tt><tt class="descname">calc_fracsymop</tt><big>(</big><em>pdb</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_fracsymop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_fracsymop" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform the symmetry opertators into the fractional 
-crystallographic basis:
-.. math:</p>
-<div class="highlight-python"><pre>R_c &amp;= \mathbf{SR}_w\mathbf{S}^I \\
-t_c &amp;= \mathbf{S}t_w</pre>
-</div>
+<dd><p>List hkl indicies that fall within a range [dmin, dmax]
+also calculate the corresponding d-spacing and sin theta over 
+lambda where,</p>
+<div class="math">
+\[\frac{\sin(\theta)}{\lambda} = \frac{1}{2d}\]</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Param :</th><td class="field-body">Instance of :class: <cite>ParsePDB &lt;ParsePBD&gt;</cite></td>
+<tr class="field-odd field"><th class="field-name">Param :</th><td class="field-body">Instance of ParsePDB</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">rotation matrix and translation vector lists <tt class="docutils literal"><span class="pre">(Rc,</span> <span class="pre">tc)</span></tt></td>
 </tr>
@@ -184,7 +182,7 @@ t_c &amp;= \mathbf{S}t_w</pre>
 
 <dl class="function">
 <dt id="strufac.generate_hkl">
-<tt class="descclassname">strufac.</tt><tt class="descname">generate_hkl</tt><big>(</big><em>pdb</em>, <em>dmin</em>, <em>dmax=1000000.0</em><big>)</big><a class="reference internal" href="_modules/strufac.html#generate_hkl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.generate_hkl" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">generate_hkl</tt><big>(</big><em>pdb</em>, <em>dmin</em>, <em>dmax=1000</em><big>)</big><a class="reference internal" href="_modules/strufac.html#generate_hkl"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.generate_hkl" title="Permalink to this definition">¶</a></dt>
 <dd><p>List hkl indicies that fall within a range [dmin, dmax]
 also calculate the corresponding d-spacing and sin theta over 
 lambda where,</p>
