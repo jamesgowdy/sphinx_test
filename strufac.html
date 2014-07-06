@@ -101,8 +101,8 @@ to calculate the coordinates in the crystallographic basis:</p>
 </pre></div>
 </div>
 <dl class="method">
-<dt id="strufac.ParsePDB.calc_fraccoord">
-<tt class="descname">calc_fraccoord</tt><big>(</big><em>xyz=None</em><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB.calc_fraccoord"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB.calc_fraccoord" title="Permalink to this definition">¶</a></dt>
+<dt id="strufac.ParsePDB.frac_coords">
+<tt class="descname">frac_coords</tt><big>(</big><em>xyz=None</em><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB.frac_coords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB.frac_coords" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform cartesian world coordinates into the fractional 
 crystallographic basis using the matrix multiplication:</p>
 <div class="math">
@@ -123,12 +123,11 @@ and a matrix of fractional coordinates with dimensions <em>(3, N)</em> is return
 </dd></dl>
 
 <dl class="method">
-<dt id="strufac.ParsePDB.calc_fracsymop">
-<tt class="descname">calc_fracsymop</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB.calc_fracsymop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB.calc_fracsymop" title="Permalink to this definition">¶</a></dt>
+<dt id="strufac.ParsePDB.frac_symops">
+<tt class="descname">frac_symops</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB.frac_symops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB.frac_symops" title="Permalink to this definition">¶</a></dt>
 <dd><p>Transform the symmetry opertators into the fractional crystallographic 
-basis using using the similarity transform 
-<span class="math">\(\mathbf{R}_c &amp;= \mathbf{SR}_w\mathbf{S}^{-1}\)</span> and matrix multipliction
-<span class="math">\(\mathbf{t}_c &amp;= \mathbf{S}\mathbf{t}_w\)</span></p>
+basis using using the similarity transform <span class="math">\(\mathbf{R}_c = \mathbf{SR}_w\mathbf{S}^{-1}\)</span> 
+and matrix multipliction <span class="math">\(\mathbf{t}_c = \mathbf{S}\mathbf{t}_w\)</span></p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -242,7 +241,7 @@ basis vectors scaled by <em>dmin</em>.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> &#8211; the interplanar distance</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><span class="math">\(\sin(\theta)/\lambda\)</span></td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span></td>
 </tr>
 </tbody>
 </table>
