@@ -175,6 +175,21 @@ to calculate the coordinates in the crystallographic basis:</p>
 i.e. the reciprocal lengths of the vectors colinear with the unit cell 
 basis vectors scaled by <em>dmin</em>. This is explained in step 9 of my notes on 
 <a class="reference external" href="http://nbviewer.ipython.org/github/jamesgowdy/biophys/blob/master/sf_directsum.ipynb">structure factor calculation</a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pdb</strong> &#8211; instance of <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
+<li><strong>dmin</strong> &#8211; minimum interplanar distance of interest</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Miller indicies as a tuple: <tt class="docutils literal"><span class="pre">(hmax,</span> <span class="pre">kmax,</span> <span class="pre">lmax)</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">

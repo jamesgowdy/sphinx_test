@@ -182,6 +182,10 @@
 <span class="sd">    basis vectors scaled by *dmin*. This is explained in step 9 of my notes on </span>
 <span class="sd">    `structure factor calculation`_.</span>
 
+<span class="sd">    :param pdb: instance of :class:`ParsePDB &lt;ParsePDB&gt;`</span>
+<span class="sd">    :param dmin: minimum interplanar distance of interest</span>
+<span class="sd">    :return: Miller indicies as a tuple: ``(hmax, kmax, lmax)``</span>
+
 <span class="sd">    .. _structure factor calculation: http://nbviewer.ipython.org/github/jamesgowdy/biophys/blob/master/sf_directsum.ipynb</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">hmax</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="n">dmin</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span> <span class="c"># calc_d(ST,[dmin,0,0])</span>
