@@ -1,4 +1,4 @@
-calc module
+calc Module
 ===========
 
 .. automodule:: calc

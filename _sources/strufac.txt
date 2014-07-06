@@ -1,4 +1,4 @@
-strufac module
+strufac Module
 ==============
 
 .. automodule:: strufac
