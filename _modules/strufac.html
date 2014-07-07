@@ -197,6 +197,7 @@
 <span class="sd">    :param list elems: a list of elements symbols</span>
 <span class="sd">    :kwarg int neglogtol: the negative logarithm of the tolerance</span>
 <span class="sd">    :returns: indcies of the general and special positions ``(general, special)``</span>
+<span class="sd">    :rtype: (1D `np.ndarray`, 1D `np.ndarray`)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">three</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">xyz</span><span class="o">.</span><span class="n">shape</span>
     <span class="k">if</span> <span class="n">three</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;xyz array not correct shape&#39;</span><span class="p">)</span> 
@@ -218,11 +219,11 @@
     <span class="sd">r&#39;&#39;&#39;Transform the symmetry opertators for use with coordinates in the </span>
 <span class="sd">    fractional crystallographic basis</span>
 
-<span class="sd">    :param S: scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
-<span class="sd">    :param Rw: a cartesian basis rotation matrix</span>
-<span class="sd">    :param tw: a catesian basis translation vector</span>
+<span class="sd">    :param np.ndarray S: scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
+<span class="sd">    :param np.ndarray Rw: a cartesian basis rotation matrix</span>
+<span class="sd">    :param np.ndarray tw: a catesian basis translation vector</span>
 <span class="sd">    :return: transformed rotation matrix and translation vector ``(Rc, tc)``</span>
-<span class="sd">    :rtype: (np.ndarray, np.ndarray)</span>
+<span class="sd">    :rtype: a tuple of (2D `np.ndarray`, 1D `np.ndarray`)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">SI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
     <span class="n">Rc</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">Rw</span><span class="p">,</span> <span class="n">SI</span><span class="p">)</span>
@@ -233,9 +234,10 @@
     <span class="sd">r&#39;&#39;&#39;Transform cartesian world coordinates into the fractional </span>
 <span class="sd">    crystallographic basis.</span>
 
-<span class="sd">    :param S: scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
+<span class="sd">    :param np.ndarray S: scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
 <span class="sd">    :param xyz: coordinates with the coefficents expressed in the certesian basis</span>
-<span class="sd">        stored as column vectors</span>
+<span class="sd">        stored as column vectors </span>
+<span class="sd">    :type xyz: 1D np.ndarray or 2D np.ndarray </span>
 <span class="sd">    :return: transformed fractional coordinates stored as column vectors</span>
 <span class="sd">    :rtype: 2D or 1D np.ndarray</span>
 <span class="sd">    &#39;&#39;&#39;</span>        
@@ -246,7 +248,7 @@
 <span class="sd">    i.e. the reciprocal lengths of the vectors colinear with the unit cell </span>
 <span class="sd">    basis vectors scaled by *dmin*.</span>
 
-<span class="sd">    :param S: scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
+<span class="sd">    :param np.ndarray S: scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
 <span class="sd">    :param float dmin: minimum interplanar distance of interest</span>
 <span class="sd">    :return: Miller indicies as a tuple: ``(hmax, kmax, lmax)``</span>
 <span class="sd">    :rtype: (float, float, float)</span>
@@ -260,9 +262,11 @@
     <span class="sd">r&#39;&#39;&#39;Calculate the resolution (aka the interplanar distance) corresponding </span>
 <span class="sd">    to a given reflection</span>
 <span class="sd">    </span>
-<span class="sd">    :param S: the scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
+<span class="sd">    :param np.ndarray S: the scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
 <span class="sd">    :param hkl: Miller index vector or matrix with each triple stored as columns</span>
+<span class="sd">    :type hkl: 1D np.ndarray or 2D np.ndarray</span>
 <span class="sd">    :return: the interplanar distance(s)</span>
+<span class="sd">    :rtype: floar or `np.ndarray` </span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">ST</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
     <span class="n">norm</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">A</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="o">*</span><span class="n">A</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
@@ -276,7 +280,7 @@
 <span class="sd">    :param d: the interplanar distance</span>
 <span class="sd">    :type d: float or 1D np.ndarray</span>
 <span class="sd">    :return: :math:`\frac{\sin(\theta)}{\lambda}`</span>
-<span class="sd">    :rtype: float or 1D np.ndarray</span>
+<span class="sd">    :rtype: `float` or 1D `np.ndarray`</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">d</span><span class="p">)</span>
 </div>
@@ -289,7 +293,7 @@
 <span class="sd">    :param float dmin: minimum resolution (interplanar distance)</span>
 <span class="sd">    :kwarg float dmax: optional maximum resolution (interplanar distance) </span>
 <span class="sd">    :return: hkl indicies and interplanar distance vector:``(hkls, ds)``</span>
-<span class="sd">    :rtype: (2D np.ndarray, 1D np.ndarray)</span>
+<span class="sd">    :rtype: (2D `np.ndarray`, 1D `np.ndarray`)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">hkls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="o">*</span><span class="nb">map</span><span class="p">(</span><span class="nb">range</span><span class="p">,</span> <span class="n">hklmax</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">dmin</span><span class="p">)))</span>
     <span class="n">hkls</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">row_stack</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ndarray</span><span class="o">.</span><span class="n">flatten</span><span class="p">,</span> <span class="n">hkls</span><span class="p">))[:,</span><span class="mi">1</span><span class="p">:]</span>
@@ -313,7 +317,7 @@
 <span class="sd">    :param str e: atomic symbol</span>
 <span class="sd">    :param float stol2: the resolution expressed as :math:`\sin(\theta)/\lambda`</span>
 <span class="sd">    :return: the atomic scattering factor at the specified resolution</span>
-<span class="sd">    :rttype: float</span>
+<span class="sd">    :rttype: `float`</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span> <span class="o">=</span> <span class="n">CMA</span><span class="p">[</span><span class="n">e</span><span class="p">],</span> <span class="n">CMB</span><span class="p">[</span><span class="n">e</span><span class="p">],</span> <span class="n">CMC</span><span class="p">[</span><span class="n">e</span><span class="p">]</span>
     <span class="n">stol2</span> <span class="o">=</span> <span class="n">stol</span><span class="o">*</span><span class="n">stol</span>
@@ -328,7 +332,7 @@
 <span class="sd">    :param uc: instance of :class:`UnitCell &lt;UnitCell&gt;`</span>
 <span class="sd">    :param numpy.ndarray hkl: a Miller index triple</span>
 <span class="sd">    :return: scattering factors (``fBs``)</span>
-<span class="sd">    :rtype: numpy.ndarray</span>
+<span class="sd">    :rtype: 1D `numpy.ndarray`</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">f0</span><span class="p">,</span> <span class="n">fB</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">[]</span>
     <span class="n">stol</span> <span class="o">=</span> <span class="n">stol</span><span class="p">(</span><span class="n">resolution</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">hkl</span><span class="p">))</span>
@@ -349,7 +353,7 @@
 <span class="sd">    :param np.ndarray fBs: precalculated scattering factors with B-factor contributions</span>
 <span class="sd">    :param numpy.ndarray hkl: a Miller index triple</span>
 <span class="sd">    :return: a complex structure factor</span>
-<span class="sd">    :rtype: complex</span>
+<span class="sd">    :rtype: `complex` scalar</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">F</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">pi2j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">2j</span>
@@ -364,7 +368,7 @@
 <span class="sd">    :param F: complex structure factor</span>
 <span class="sd">    :type F: complex or 1D np.ndarray</span>
 <span class="sd">    :return: the amplitude and phase: ``(amp, phi)`` </span>
-<span class="sd">    :rtype: (float, float) or (1D np.ndarray, 1D np.ndarray)</span>
+<span class="sd">    :rtype: a tuple such as (`float`, `float`) or (1D `np.ndarray`, 1D `np.ndarray`)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">F</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">F</span><span class="p">)</span>
 </div>
