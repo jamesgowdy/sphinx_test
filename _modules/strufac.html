@@ -273,7 +273,7 @@
 <span class="sd">    :param float dmin: minimum resolution (interplanar distance)</span>
 <span class="sd">    :kwarg float dmax: optional maximum resolution (interplanar distance) </span>
 <span class="sd">    :return: hkl indicies with shape *(3, N)*, interplanar distances, </span>
-<span class="sd">    and :math:`\sin(\theta)/\lambda` in a tuple: ``(hkls, ds, stols)``</span>
+<span class="sd">        and :math:`\sin(\theta)/\lambda` in a tuple: ``(hkls, ds, stols)``</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="c"># get upper bound on hklmax by scaling basis vectors by dmin</span>
     <span class="n">hmax</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="n">dmin</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
