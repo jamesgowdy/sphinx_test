@@ -131,46 +131,8 @@ the PDB file using the symmetry operators. Special positions are removed.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strufac.calc_f0">
-<tt class="descclassname">strufac.</tt><tt class="descname">calc_f0</tt><big>(</big><em>e</em>, <em>stol</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_f0"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_f0" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate an atomic scattering factor at a given resolution
-of <span class="math">\(\sin(\theta)/\lambda\)</span>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>e</strong> (<em>str</em>) &#8211; atomic symbol</li>
-<li><strong>stol2</strong> (<em>float</em>) &#8211; the resolution expressed as <span class="math">\(\sin(\theta)/\lambda\)</span></li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the atomic scattering factor at the specified resolution</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="strufac.complex2polar">
-<tt class="descclassname">strufac.</tt><tt class="descname">complex2polar</tt><big>(</big><em>F</em><big>)</big><a class="reference internal" href="_modules/strufac.html#complex2polar"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.complex2polar" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert complex structure factor(s) to a amplitude and phases</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>F</strong> (<em>complex/np.ndarray</em>) &#8211; complex structure factor</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the amplitude and phase: <tt class="docutils literal"><span class="pre">(amp,</span> <span class="pre">phi)</span></tt></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="strufac.directsum_F">
-<tt class="descclassname">strufac.</tt><tt class="descname">directsum_F</tt><big>(</big><em>uc</em>, <em>fBs</em>, <em>hkl</em><big>)</big><a class="reference internal" href="_modules/strufac.html#directsum_F"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.directsum_F" title="Permalink to this definition">¶</a></dt>
+<dt id="strufac.calc_Fdirectsum">
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_Fdirectsum</tt><big>(</big><em>uc</em>, <em>fBs</em>, <em>hkl</em>, <em>return_complex=False</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_Fdirectsum"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_Fdirectsum" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calculate a structure factor by direct summation</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
@@ -178,12 +140,58 @@ of <span class="math">\(\sin(\theta)/\lambda\)</span>.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>uc</strong> &#8211; instance of <a class="reference internal" href="#strufac.UnitCell" title="strufac.UnitCell"><tt class="xref py py-class docutils literal"><span class="pre">UnitCell</span></tt></a></li>
-<li><strong>fBs</strong> (<em>np.ndarray</em>) &#8211; precalculated scattering factors with B-factor contributions</li>
+<li><strong>fBs</strong> (<em>np.ndarray</em>) &#8211; precalculated scattering and B-factor contributions</li>
 <li><strong>hkl</strong> (<em>np.ndarray</em>) &#8211; a Miller index triple</li>
+<li><strong>return_compex</strong> &#8211; if <tt class="docutils literal"><span class="pre">False</span></tt> return the amplitude and phase</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a complex structure factor</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a complex structure factor or the amplitude and phase <tt class="docutils literal"><span class="pre">(amp,</span> <span class="pre">phi)</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strufac.calc_resol">
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_resol</tt><big>(</big><em>S</em>, <em>hkl</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_resol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_resol" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate the resolution (aka the interplanar distance) corresponding 
+to a given reflection</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>S</strong> (<em>np.ndarray</em>) &#8211; the scale matrix from <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
+<li><strong>hkl</strong> (<em>np.ndarray</em>) &#8211; Miller index vector or matrix with each triple stored as columns</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the interplanar distance(s) and <span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span>: 
+<tt class="docutils literal"><span class="pre">(d,</span> <span class="pre">stol)</span></tt></p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="strufac.calc_scale">
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_scale</tt><big>(</big><em>abc</em>, <em>angles</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_scale"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_scale" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate deorthogonalisation matrix from the lattice parameters. 
+Use this function for better accuracy than matricies given in PDB record.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>abc</strong> &#8211; unit cell lengths (the crystallographic basis vectors): a, b, c</li>
+<li><strong>angles</strong> &#8211; the angles between the vectors: <span class="math">\(\alpha, \beta \gamma\)</span></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">scale matrix and the inverse scale matrix <tt class="docutils literal"><span class="pre">(S,</span> <span class="pre">SI)</span></tt></p>
 </td>
 </tr>
 </tbody>
@@ -200,11 +208,12 @@ of <span class="math">\(\sin(\theta)/\lambda\)</span>.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>pdb</strong> &#8211; instance of <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
-<li><strong>hkl</strong> (<em>np.ndarray</em>) &#8211; Miller indicies stored as column vectors</li>
+<li><strong>hkl</strong> (<em>np.ndarray</em>) &#8211; Miller indicies stored as column vectors 
+i.e. shape <em>(3, N)</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the symmetry equivalent reflections</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the symmetry equivalent reflections with shape <em>(nsymops, 3, N)</em></p>
 </td>
 </tr>
 </tbody>
@@ -214,7 +223,7 @@ of <span class="math">\(\sin(\theta)/\lambda\)</span>.</p>
 <dl class="function">
 <dt id="strufac.enumerate_hTs">
 <tt class="descclassname">strufac.</tt><tt class="descname">enumerate_hTs</tt><big>(</big><em>pdb</em>, <em>hkl</em><big>)</big><a class="reference internal" href="_modules/strufac.html#enumerate_hTs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.enumerate_hTs" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate all reciprocal space translational shift scalar products</p>
+<dd><p>Calculate scalar products of the miller indcies with translational shifts</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -225,7 +234,7 @@ of <span class="math">\(\sin(\theta)/\lambda\)</span>.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the reciprocal space translational shifts</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the shifts due to translational part of the symmetry operators</p>
 </td>
 </tr>
 </tbody>
@@ -233,57 +242,10 @@ of <span class="math">\(\sin(\theta)/\lambda\)</span>.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strufac.frac_coords">
-<tt class="descclassname">strufac.</tt><tt class="descname">frac_coords</tt><big>(</big><em>S</em>, <em>xyz</em><big>)</big><a class="reference internal" href="_modules/strufac.html#frac_coords"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.frac_coords" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform cartesian world coordinates into the fractional 
-crystallographic basis.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>S</strong> (<em>np.ndarray</em>) &#8211; scale matrix from <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
-<li><strong>xyz</strong> (<em>np.ndarray</em>) &#8211; coordinates with the coefficents expressed in the certesian basis
-stored as column vectors</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">transformed fractional coordinates stored as column vectors</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="strufac.frac_symops">
-<tt class="descclassname">strufac.</tt><tt class="descname">frac_symops</tt><big>(</big><em>S</em>, <em>Rw</em>, <em>tw</em><big>)</big><a class="reference internal" href="_modules/strufac.html#frac_symops"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.frac_symops" title="Permalink to this definition">¶</a></dt>
-<dd><p>Transform the symmetry opertators for use with coordinates in the 
-fractional crystallographic basis</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>S</strong> (<em>np.ndarray</em>) &#8211; scale matrix from <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
-<li><strong>Rw</strong> (<em>np.ndarray</em>) &#8211; a cartesian basis rotation matrix</li>
-<li><strong>tw</strong> (<em>np.ndarray</em>) &#8211; a catesian basis translation vector</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">transformed rotation matrix and translation vector <tt class="docutils literal"><span class="pre">(Rc,</span> <span class="pre">tc)</span></tt></p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="strufac.hkllist">
-<tt class="descclassname">strufac.</tt><tt class="descname">hkllist</tt><big>(</big><em>S</em>, <em>dmin</em>, <em>dmax=1000.0</em><big>)</big><a class="reference internal" href="_modules/strufac.html#hkllist"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.hkllist" title="Permalink to this definition">¶</a></dt>
+<dt id="strufac.enumerate_hkls">
+<tt class="descclassname">strufac.</tt><tt class="descname">enumerate_hkls</tt><big>(</big><em>S</em>, <em>dmin</em>, <em>dmax=1000.0</em><big>)</big><a class="reference internal" href="_modules/strufac.html#enumerate_hkls"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.enumerate_hkls" title="Permalink to this definition">¶</a></dt>
 <dd><p>Return a matrix of hkl indicies that fall within a resolution range 
-[<em>dmin</em>, <em>dmax</em>] as a 2D matrix with dimensions <em>(3, N)</em> also returns the 
-corresponding interplanar distances, <em>d</em>, as a vector of length <em>N</em></p>
+[<em>dmin</em>, <em>dmax</em>] and the correspinding resolutions</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -295,50 +257,31 @@ corresponding interplanar distances, <em>d</em>, as a vector of length <em>N</em
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">hkl indicies and interplanar distance vector:<tt class="docutils literal"><span class="pre">(hkls,</span> <span class="pre">ds)</span></tt></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">hkl indicies with shape <em>(3, N)</em>, interplanar distances,</p>
 </td>
 </tr>
 </tbody>
 </table>
-</dd></dl>
-
-<dl class="function">
-<dt id="strufac.hklmax">
-<tt class="descclassname">strufac.</tt><tt class="descname">hklmax</tt><big>(</big><em>S</em>, <em>dmin</em><big>)</big><a class="reference internal" href="_modules/strufac.html#hklmax"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.hklmax" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate a maximum bound on hkl corresponding to a minimum resolution
-i.e. the reciprocal lengths of the vectors colinear with the unit cell 
-basis vectors scaled by <em>dmin</em>.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>S</strong> (<em>np.ndarray</em>) &#8211; scale matrix from <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
-<li><strong>dmin</strong> (<em>float</em>) &#8211; minimum interplanar distance of interest</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">Miller indicies as a tuple: <tt class="docutils literal"><span class="pre">(hmax,</span> <span class="pre">kmax,</span> <span class="pre">lmax)</span></tt></p>
-</td>
-</tr>
-</tbody>
-</table>
+<p>and <span class="math">\(\sin(\theta)/\lambda\)</span> in a tuple: <tt class="docutils literal"><span class="pre">(hkls,</span> <span class="pre">ds,</span> <span class="pre">stols)</span></tt></p>
 </dd></dl>
 
 <dl class="function">
 <dt id="strufac.is_absent">
 <tt class="descclassname">strufac.</tt><tt class="descname">is_absent</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#is_absent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.is_absent" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Check if reflections are systematically absent</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="strufac.is_centric">
 <tt class="descclassname">strufac.</tt><tt class="descname">is_centric</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#is_centric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.is_centric" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Check if reflections are centric</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="strufac.is_enhanced">
 <tt class="descclassname">strufac.</tt><tt class="descname">is_enhanced</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#is_enhanced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.is_enhanced" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<dd><p>Check if reflections are systematically enhanced</p>
+</dd></dl>
 
 <dl class="function">
 <dt id="strufac.locate_specials">
@@ -366,7 +309,7 @@ two coordinate vectors are equal</li>
 
 <dl class="function">
 <dt id="strufac.precalc_fB">
-<tt class="descclassname">strufac.</tt><tt class="descname">precalc_fB</tt><big>(</big><em>uc</em>, <em>hkl</em><big>)</big><a class="reference internal" href="_modules/strufac.html#precalc_fB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.precalc_fB" title="Permalink to this definition">¶</a></dt>
+<tt class="descclassname">strufac.</tt><tt class="descname">precalc_fB</tt><big>(</big><em>uc</em>, <em>stol</em><big>)</big><a class="reference internal" href="_modules/strufac.html#precalc_fB"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.precalc_fB" title="Permalink to this definition">¶</a></dt>
 <dd><p>Pre-calculate scattering factors with isotropic B-factor and occupancy 
 contributions for all atoms in the unit cell at a specified resolution 
 dictated by the Miller index.</p>
@@ -380,7 +323,7 @@ dictated by the Miller index.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">precalulcated scattering factors</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">pre-calulcated scattering factors</p>
 </td>
 </tr>
 </tbody>
@@ -388,48 +331,9 @@ dictated by the Miller index.</p>
 </dd></dl>
 
 <dl class="function">
-<dt id="strufac.recipunit">
-<tt class="descclassname">strufac.</tt><tt class="descname">recipunit</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#recipunit"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.recipunit" title="Permalink to this definition">¶</a></dt>
+<dt id="strufac.trim_recipasu">
+<tt class="descclassname">strufac.</tt><tt class="descname">trim_recipasu</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#trim_recipasu"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.trim_recipasu" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
-
-<dl class="function">
-<dt id="strufac.resolution">
-<tt class="descclassname">strufac.</tt><tt class="descname">resolution</tt><big>(</big><em>S</em>, <em>hkl</em><big>)</big><a class="reference internal" href="_modules/strufac.html#resolution"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.resolution" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate the resolution (aka the interplanar distance) corresponding 
-to a given reflection</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>S</strong> (<em>np.ndarray</em>) &#8211; the scale matrix from <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
-<li><strong>hkl</strong> (<em>np.ndarray</em>) &#8211; Miller index vector or matrix with each triple stored as columns</li>
-</ul>
-</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the interplanar distance(s)</p>
-</td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
-
-<dl class="function">
-<dt id="strufac.stol">
-<tt class="descclassname">strufac.</tt><tt class="descname">stol</tt><big>(</big><em>d</em><big>)</big><a class="reference internal" href="_modules/strufac.html#stol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.stol" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert an interplanar distance to <span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span>
-using Bragg&#8217;s law.</p>
-<table class="docutils field-list" frame="void" rules="none">
-<col class="field-name" />
-<col class="field-body" />
-<tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>float/np.ndarray</em>) &#8211; the interplanar distance</td>
-</tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span></td>
-</tr>
-</tbody>
-</table>
-</dd></dl>
 
 </div>
 
