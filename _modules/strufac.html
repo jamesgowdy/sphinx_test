@@ -195,26 +195,26 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">xc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yc</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">zc</span> <span class="o">=</span> <span class="n">UCc</span><span class="p">[</span><span class="n">unique</span><span class="p">]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">xw</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">yw</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">zw</span> <span class="o">=</span> <span class="n">UCw</span><span class="p">[</span><span class="n">unique</span><span class="p">]</span>
 </div>
-<div class="viewcode-block" id="locate_specials"><a class="viewcode-back" href="../strufac.html#strufac.locate_specials">[docs]</a><span class="k">def</span> <span class="nf">locate_specials</span><span class="p">(</span><span class="n">XYZ</span><span class="p">,</span> <span class="n">elems</span><span class="p">,</span> <span class="n">neglogtol</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+<div class="viewcode-block" id="locate_specials"><a class="viewcode-back" href="../strufac.html#strufac.locate_specials">[docs]</a><span class="k">def</span> <span class="nf">locate_specials</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">elems</span><span class="p">,</span> <span class="n">neglogtol</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Find unique atom coordinates as columns in a matrix in order to </span>
 <span class="sd">    exclude special position atoms on symmetry axes.</span>
 
-<span class="sd">    :param np.ndarray XYZ: a 2D array with coordinates stored as column vectors</span>
-<span class="sd">    :param np.ndarray elems: a list of elements symbols</span>
+<span class="sd">    :param xyz: a 2D array with coordinates stored as column vectors</span>
+<span class="sd">    :param elems: a list of elements symbols</span>
 <span class="sd">    :kwarg int neglogtol: the negative logarithm of the tolerance</span>
 
 <span class="sd">    :returns: indcies of the general and special positions ``(general, special)``</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">three</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">XYZ</span><span class="o">.</span><span class="n">shape</span>
-    <span class="k">if</span> <span class="n">three</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;XYZ array not correct shape&#39;</span><span class="p">)</span> 
+    <span class="n">three</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">xyz</span><span class="o">.</span><span class="n">shape</span>
+    <span class="k">if</span> <span class="n">three</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;xyz array not correct shape&#39;</span><span class="p">)</span> 
     <span class="k">if</span> <span class="n">n</span> <span class="o">!=</span> <span class="nb">len</span><span class="p">(</span><span class="n">elems</span><span class="p">):</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;Arrays not the same length&#39;</span><span class="p">)</span>
 
     <span class="c"># round to ensure will eliminate if within tolerance</span>
-    <span class="n">XYZ</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">XYZ</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="n">neglogtol</span><span class="p">)</span>
+    <span class="n">xyz</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">xyz</span><span class="p">,</span> <span class="n">decimals</span><span class="o">=</span><span class="n">neglogtol</span><span class="p">)</span>
 
     <span class="c"># set up structured array</span>
-    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">[(</span><span class="s">&#39;elems&#39;</span><span class="p">,</span><span class="s">&#39;a10&#39;</span><span class="p">),(</span><span class="s">&#39;UCw&#39;</span><span class="p">,</span><span class="s">&#39;f4&#39;</span><span class="p">,(</span><span class="mi">3</span><span class="p">,))])</span>
-    <span class="n">arr</span><span class="p">[</span><span class="s">&#39;elems&#39;</span><span class="p">],</span> <span class="n">arr</span><span class="p">[</span><span class="s">&#39;XYZ&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">elems</span><span class="p">),</span> <span class="n">XYZ</span>
+    <span class="n">arr</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">dtype</span><span class="o">=</span><span class="p">[(</span><span class="s">&#39;elems&#39;</span><span class="p">,</span><span class="s">&#39;a10&#39;</span><span class="p">),(</span><span class="s">&#39;xyz&#39;</span><span class="p">,</span><span class="s">&#39;f4&#39;</span><span class="p">,(</span><span class="mi">3</span><span class="p">,))])</span>
+    <span class="n">arr</span><span class="p">[</span><span class="s">&#39;elems&#39;</span><span class="p">],</span> <span class="n">arr</span><span class="p">[</span><span class="s">&#39;xyz&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">elems</span><span class="p">),</span> <span class="n">xyz</span>
 
     <span class="n">unique</span><span class="p">,</span> <span class="n">unique_idx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">unique</span><span class="p">(</span><span class="n">arr</span><span class="p">,</span> <span class="n">return_index</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
     <span class="n">special</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
@@ -314,7 +314,7 @@
 <span class="sd">    :param A: a list of the the four Cromer-Mann A parameters</span>
 <span class="sd">    :param B: a list of the the four Cromer-Mann B parameters</span>
 <span class="sd">    :param float C: the Cromer-Mann C parameter</span>
-<span class="sd">    :param float stol: :math:`\sin(\theta)/\lambda`</span>
+<span class="sd">    :param float stol: the resolution expressed as :math:`\sin(\theta)/\lambda`</span>
 <span class="sd">    :return: the atomic scattering factor at the specified resolution </span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">stol</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span><span class="o">+</span><span class="n">C</span>
