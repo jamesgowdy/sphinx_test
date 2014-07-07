@@ -256,7 +256,7 @@
 <span class="sd">    </span>
 <span class="sd">    :param np.ndarray S: the scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
 <span class="sd">    :param np.ndarray hkl: Miller index vector or matrix with each triple stored as columns</span>
-<span class="sd">    :return: **d, stol** - a tuple containing the interplanar distances and </span>
+<span class="sd">    :return: **d, stol** - vectors containing the interplanar distances and </span>
 <span class="sd">        :math:`\frac{\sin(\theta)}{\lambda}` values</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">ST</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
@@ -272,7 +272,7 @@
 <span class="sd">    :param np.ndarray S: the scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
 <span class="sd">    :param float dmin: minimum resolution (interplanar distance)</span>
 <span class="sd">    :kwarg float dmax: optional maximum resolution (interplanar distance) </span>
-<span class="sd">    :return: **hkls, ds, stol** - a tuple of hkl indicies with shape *(3, N)*</span>
+<span class="sd">    :return: **hkls, ds, stol** - an array containing the hkl indicies with shape *(3, N)*</span>
 <span class="sd">        the interplanar distances, and :math:`\frac{\sin(\theta)}{\lambda}` values</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="c"># get upper bound on hklmax by scaling basis vectors by dmin</span>
