@@ -308,7 +308,7 @@
 
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fB</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="calc_Fdirectsum"><a class="viewcode-back" href="../strufac.html#strufac.calc_Fdirectsum">[docs]</a><span class="k">def</span> <span class="nf">calc_Fdirectsum</span><span class="p">(</span><span class="n">uc</span><span class="p">,</span> <span class="n">fB</span><span class="p">,</span> <span class="n">hkl</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_directsum"><a class="viewcode-back" href="../strufac.html#strufac.calc_directsum">[docs]</a><span class="k">def</span> <span class="nf">calc_directsum</span><span class="p">(</span><span class="n">uc</span><span class="p">,</span> <span class="n">fB</span><span class="p">,</span> <span class="n">hkl</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Calculate a structure factor by direct summation</span>
 
 <span class="sd">    :param uc: instance of :class:`UnitCell &lt;UnitCell&gt;`</span>
@@ -325,7 +325,7 @@
     <span class="c"># return complex structure factor or amplitude and phase</span>
     <span class="k">return</span> <span class="n">F</span>
 </div>
-<div class="viewcode-block" id="convert_polar"><a class="viewcode-back" href="../strufac.html#strufac.convert_polar">[docs]</a><span class="k">def</span> <span class="nf">convert_polar</span><span class="p">(</span><span class="n">F</span><span class="p">):</span>
+<div class="viewcode-block" id="convert_F"><a class="viewcode-back" href="../strufac.html#strufac.convert_F">[docs]</a><span class="k">def</span> <span class="nf">convert_F</span><span class="p">(</span><span class="n">F</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Convert complex structure factor to amplitude and phase</span>
 
 <span class="sd">    :param F: complex structure factor</span>
