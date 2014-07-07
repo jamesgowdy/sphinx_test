@@ -163,7 +163,7 @@ of <span class="math">\(\sin(\theta)/\lambda\)</span>.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>F</strong> (<em>np.ndarray</em>) &#8211; complex structure factor</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>F</strong> (<em>float, np.ndarray</em>) &#8211; complex structure factor</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the amplitude and phase: <tt class="docutils literal"><span class="pre">(amp,</span> <span class="pre">phi)</span></tt></td>
 </tr>
@@ -271,7 +271,7 @@ corresponding interplanar distances, <em>d</em>, as a vector of length <em>N</em
 <col class="field-body" />
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
-<li><strong>S</strong> &#8211; the scale matrix from <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
+<li><strong>S</strong> (<em>np.ndarray</em>) &#8211; the scale matrix from <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
 <li><strong>dmin</strong> (<em>float</em>) &#8211; minimum resolution (interplanar distance)</li>
 <li><strong>dmax</strong> (<em>float</em>) &#8211; optional maximum resolution (interplanar distance)</li>
 </ul>
@@ -419,7 +419,7 @@ using Bragg&#8217;s law.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>np.ndarray</em>) &#8211; the interplanar distance</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>float, np.ndarray</em>) &#8211; the interplanar distance</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span></td>
 </tr>

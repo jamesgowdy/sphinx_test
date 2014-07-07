@@ -235,7 +235,7 @@
 <span class="sd">    crystallographic basis.</span>
 
 <span class="sd">    :param np.ndarray S: scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
-<span class="sd">    :param  np.ndarray xyz: coordinates with the coefficents expressed in the certesian basis</span>
+<span class="sd">    :param np.ndarray xyz: coordinates with the coefficents expressed in the certesian basis</span>
 <span class="sd">        stored as column vectors </span>
 <span class="sd">    :return: transformed fractional coordinates stored as column vectors</span>
 <span class="sd">    :rtype: 2D or 1D np.ndarray</span>
@@ -275,7 +275,8 @@
     <span class="sd">r&#39;&#39;&#39;Convert an interplanar distance to :math:`\frac{\sin(\theta)}{\lambda}`</span>
 <span class="sd">    using Bragg&#39;s law.</span>
 
-<span class="sd">    :param np.ndarray d: the interplanar distance</span>
+<span class="sd">    :param d: the interplanar distance</span>
+<span class="sd">    :type d: float, np.ndarray</span>
 <span class="sd">    :return: :math:`\frac{\sin(\theta)}{\lambda}`</span>
 <span class="sd">    :rtype: `float` or 1D `np.ndarray`</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -286,7 +287,7 @@
 <span class="sd">    [*dmin*, *dmax*] as a 2D matrix with dimensions *(3, N)* also returns the </span>
 <span class="sd">    corresponding interplanar distances, *d*, as a vector of length *N*</span>
 
-<span class="sd">    :param S: the scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
+<span class="sd">    :param np.ndarray S: the scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
 <span class="sd">    :param float dmin: minimum resolution (interplanar distance)</span>
 <span class="sd">    :kwarg float dmax: optional maximum resolution (interplanar distance) </span>
 <span class="sd">    :return: hkl indicies and interplanar distance vector:``(hkls, ds)``</span>
@@ -362,7 +363,8 @@
 <div class="viewcode-block" id="complex2polar"><a class="viewcode-back" href="../strufac.html#strufac.complex2polar">[docs]</a><span class="k">def</span> <span class="nf">complex2polar</span><span class="p">(</span><span class="n">F</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Convert complex structure factor(s) to a amplitude and phases</span>
 
-<span class="sd">    :param np.ndarray F: complex structure factor</span>
+<span class="sd">    :param F: complex structure factor</span>
+<span class="sd">    :type F: float, np.ndarray</span>
 <span class="sd">    :return: the amplitude and phase: ``(amp, phi)`` </span>
 <span class="sd">    :rtype: (`float`, `float`) or (1D `np.ndarray`, 1D `np.ndarray`)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
