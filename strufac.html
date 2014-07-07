@@ -102,7 +102,8 @@ fractional crystallographic basis.</p>
 <dl class="method">
 <dt id="strufac.ParsePDB.recalc">
 <tt class="descname">recalc</tt><big>(</big><em>dec=4</em><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB.recalc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB.recalc" title="Permalink to this definition">¶</a></dt>
-<dd><p>Update symops and fractional coordinates</p>
+<dd><p>If the scale matrix is changed using the <a class="reference internal" href="#strufac.calc_scale" title="strufac.calc_scale"><tt class="xref py py-func docutils literal"><span class="pre">calc_scale()</span></tt></a> method then
+we must recalulate the fractional basis coordinates and symops</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -111,13 +112,12 @@ fractional crystallographic basis.</p>
 </tr>
 </tbody>
 </table>
-<p>If the scale matrix is changed using the <a class="reference internal" href="#strufac.calc_scale" title="strufac.calc_scale"><tt class="xref py py-func docutils literal"><span class="pre">calc_scale()</span></tt></a> method then
-we must recalulate the fractional basis coordinates and symops:</p>
-<div class="highlight-python"><div class="highlight"><pre><span class="n">pdb</span> <span class="o">=</span> <span class="n">ParsePDB</span><span class="p">(</span><span class="s">&#39;example.pdb&#39;</span><span class="p">)</span>
-<span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">SI</span> <span class="o">=</span> <span class="n">calc_scale</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">abc</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
-<span class="n">pdb</span><span class="o">.</span><span class="n">recalc</span><span class="p">()</span>
-</pre></div>
-</div>
+<dl class="docutils">
+<dt>Example::</dt>
+<dd>pdb = ParsePDB(&#8216;example.pdb&#8217;)
+pdb.S, pdb.SI = calc_scale(pdb.abc, pdb.angles)
+pdb.recalc()</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
