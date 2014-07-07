@@ -296,7 +296,7 @@
 <span class="sd">    :param np.ndarray hkl: a Miller index triple</span>
 <span class="sd">    :return: pre-calulcated scattering factors</span>
 <span class="sd">    &#39;&#39;&#39;</span>
-    <span class="n">f0</span><span class="p">,</span> <span class="n">fBs</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">[]</span>
+    <span class="n">f0</span><span class="p">,</span> <span class="n">fB</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">[]</span>
     <span class="n">stol2</span> <span class="o">=</span> <span class="n">stol</span><span class="o">*</span><span class="n">stol</span>
 
     <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">e</span><span class="p">):</span>
@@ -304,24 +304,24 @@
         <span class="n">f0</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">stol2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span><span class="o">+</span><span class="n">c</span>
     <span class="k">for</span> <span class="n">e</span><span class="p">,</span> <span class="n">Biso</span><span class="p">,</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">e</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">Biso</span><span class="p">,</span> <span class="n">uc</span><span class="o">.</span><span class="n">n</span><span class="p">):</span>
         <span class="n">debye_waller</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">Biso</span><span class="o">*</span><span class="n">stol2</span><span class="p">)</span>
-        <span class="n">fBs</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f0</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="o">*</span><span class="n">n</span><span class="o">*</span><span class="n">debye_waller</span><span class="p">)</span>
+        <span class="n">fB</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">f0</span><span class="p">[</span><span class="n">e</span><span class="p">]</span><span class="o">*</span><span class="n">n</span><span class="o">*</span><span class="n">debye_waller</span><span class="p">)</span>
 
-    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fBs</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">fB</span><span class="p">)</span>
 </div>
-<div class="viewcode-block" id="calc_Fdirectsum"><a class="viewcode-back" href="../strufac.html#strufac.calc_Fdirectsum">[docs]</a><span class="k">def</span> <span class="nf">calc_Fdirectsum</span><span class="p">(</span><span class="n">uc</span><span class="p">,</span> <span class="n">fBs</span><span class="p">,</span> <span class="n">hkl</span><span class="p">,</span> <span class="n">return_complex</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
+<div class="viewcode-block" id="calc_Fdirectsum"><a class="viewcode-back" href="../strufac.html#strufac.calc_Fdirectsum">[docs]</a><span class="k">def</span> <span class="nf">calc_Fdirectsum</span><span class="p">(</span><span class="n">uc</span><span class="p">,</span> <span class="n">fB</span><span class="p">,</span> <span class="n">hkl</span><span class="p">,</span> <span class="n">return_complex</span><span class="o">=</span><span class="bp">False</span><span class="p">):</span>
     <span class="sd">&#39;&#39;&#39;Calculate a structure factor by direct summation</span>
 
 <span class="sd">    :param uc: instance of :class:`UnitCell &lt;UnitCell&gt;`</span>
-<span class="sd">    :param np.ndarray fBs: precalculated scattering and B-factor contributions</span>
+<span class="sd">    :param np.ndarray fB: precalculated scattering and B-factor contributions</span>
 <span class="sd">    :param np.ndarray hkl: a Miller index triple</span>
 <span class="sd">    :kwarg return_compex: if ``False`` return the amplitude and phase</span>
 <span class="sd">    :return: a complex structure factor or the amplitude and phase ``(amp, phi)`` </span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">F</span> <span class="o">=</span> <span class="mi">0</span>
     <span class="n">pi2j</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="mi">2j</span>
-    <span class="k">for</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">fB</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">xyz_c</span><span class="p">,</span> <span class="n">fBs</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">xyz</span><span class="p">,</span> <span class="n">f</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">xyz_c</span><span class="p">,</span> <span class="n">fB</span><span class="p">):</span>
         <span class="n">hx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">hkl</span><span class="o">*</span><span class="n">xyz</span><span class="p">)</span>
-        <span class="n">F</span> <span class="o">+=</span> <span class="n">fB</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">pi2j</span><span class="o">*</span><span class="n">hx</span><span class="p">)</span>
+        <span class="n">F</span> <span class="o">+=</span> <span class="n">f</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">pi2j</span><span class="o">*</span><span class="n">hx</span><span class="p">)</span>
 
     <span class="c"># return complex structure factor or amplitude and phase</span>
     <span class="k">if</span> <span class="n">return_complex</span><span class="p">:</span> <span class="k">return</span> <span class="n">F</span>
