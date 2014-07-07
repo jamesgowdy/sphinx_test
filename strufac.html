@@ -148,7 +148,7 @@ of <span class="math">\(\sin(\theta)/\lambda\)</span>.</p>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the atomic scattering factor at the specified resolution</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Rttype :</th><td class="field-body"><p class="first last"><cite>float</cite></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last"><cite>float</cite></p>
 </td>
 </tr>
 </tbody>
@@ -163,11 +163,11 @@ of <span class="math">\(\sin(\theta)/\lambda\)</span>.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>F</strong> (<em>complex</em>) &#8211; complex structure factor</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>F</strong> (<em>np.ndarray</em>) &#8211; complex structure factor</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">the amplitude and phase: <tt class="docutils literal"><span class="pre">(amp,</span> <span class="pre">phi)</span></tt></td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">a tuple such as (<cite>float</cite>, <cite>float</cite>) or (1D <cite>np.ndarray</cite>, 1D <cite>np.ndarray</cite>)</td>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body">(<cite>float</cite>, <cite>float</cite>) or (1D <cite>np.ndarray</cite>, 1D <cite>np.ndarray</cite>)</td>
 </tr>
 </tbody>
 </table>
@@ -219,7 +219,7 @@ crystallographic basis.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>S</strong> (<em>np.ndarray</em>) &#8211; scale matrix from <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
-<li><strong>xyz</strong> (<em>1D np.ndarray or 2D np.ndarray</em>) &#8211; coordinates with the coefficents expressed in the certesian basis
+<li><strong>xyz</strong> (<em>np.ndarray</em>) &#8211; coordinates with the coefficents expressed in the certesian basis
 stored as column vectors</li>
 </ul>
 </td>
@@ -366,14 +366,14 @@ dictated by the Miller index.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>uc</strong> &#8211; instance of <a class="reference internal" href="#strufac.UnitCell" title="strufac.UnitCell"><tt class="xref py py-class docutils literal"><span class="pre">UnitCell</span></tt></a></li>
-<li><strong>hkl</strong> (<em>numpy.ndarray</em>) &#8211; a Miller index triple</li>
+<li><strong>hkl</strong> (<em>np.ndarray</em>) &#8211; a Miller index triple</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">precalulcated scattering factors</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">a 1D <cite>numpy.ndarray</cite> with a size equal to the the number of atoms in the unit cell</p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">1D <cite>np.ndarray</cite></p>
 </td>
 </tr>
 </tbody>
@@ -396,14 +396,14 @@ to a given reflection</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>S</strong> (<em>np.ndarray</em>) &#8211; the scale matrix from <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
-<li><strong>hkl</strong> (<em>1D np.ndarray or 2D np.ndarray</em>) &#8211; Miller index vector or matrix with each triple stored as columns</li>
+<li><strong>hkl</strong> (<em>np.ndarray</em>) &#8211; Miller index vector or matrix with each triple stored as columns</li>
 </ul>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first">the interplanar distance(s)</p>
 </td>
 </tr>
-<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">floar or <cite>np.ndarray</cite></p>
+<tr class="field-odd field"><th class="field-name">Return type:</th><td class="field-body"><p class="first last">floar or 1D <cite>np.ndarray</cite></p>
 </td>
 </tr>
 </tbody>
@@ -419,7 +419,7 @@ using Bragg&#8217;s law.</p>
 <col class="field-name" />
 <col class="field-body" />
 <tbody valign="top">
-<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>float or 1D np.ndarray</em>) &#8211; the interplanar distance</td>
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>d</strong> (<em>np.ndarray</em>) &#8211; the interplanar distance</td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span></td>
 </tr>
