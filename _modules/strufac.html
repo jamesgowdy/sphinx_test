@@ -346,9 +346,8 @@
     <span class="sd">&#39;&#39;&#39;Calculate all symmetry mate reflections</span>
 
 <span class="sd">    :param pdb: instance of :class:`ParsePDB &lt;ParsePDB&gt;`</span>
-<span class="sd">    :param np.ndarray hkl: Miller indicies stored as column vectors </span>
-<span class="sd">        i.e. shape *(3, N)*</span>
-<span class="sd">    :return: the symmetry equivalent reflections stored in a matrix </span>
+<span class="sd">    :param np.ndarray hkl: Miller indicies in an array with shape *(3, N)*</span>
+<span class="sd">    :return: the symmetry equivalent reflections indicies stored in an array</span>
 <span class="sd">        with shape *(nsymops, 3, N)*</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Rc</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">hkl</span><span class="p">)</span> <span class="k">for</span> <span class="n">Rc</span> <span class="ow">in</span> <span class="n">pdb</span><span class="o">.</span><span class="n">Rc</span><span class="p">])</span>
@@ -357,7 +356,7 @@
     <span class="sd">&#39;&#39;&#39;Calculate scalar products of the miller indcies with translational shifts</span>
 
 <span class="sd">    :param pdb: instance of :class:`ParsePDB &lt;ParsePDB&gt;`</span>
-<span class="sd">    :param np.ndarray hkl: Miller indicies stored as column vectors</span>
+<span class="sd">    :param np.ndarray hkl: Miller indicies in an array with shape *(3, N)*</span>
 <span class="sd">    :return: the shifts due to translational part of the symmetry operators</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Tc</span><span class="p">,</span> <span class="n">hkl</span><span class="p">)</span> <span class="k">for</span> <span class="n">Tc</span> <span class="ow">in</span> <span class="n">pdb</span><span class="o">.</span><span class="n">Tc</span><span class="p">])</span>
