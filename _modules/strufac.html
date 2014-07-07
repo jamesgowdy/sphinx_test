@@ -199,10 +199,9 @@
     <span class="sd">&#39;&#39;&#39;Find unique atom coordinates as columns in a matrix in order to </span>
 <span class="sd">    exclude special position atoms on symmetry axes.</span>
 
-<span class="sd">    :Parameters: </span>
-<span class="sd">        - `XYZ` - a 2D array with coordinates stored as column vectors</span>
-<span class="sd">        - `elems` - a list of elements symbols</span>
-<span class="sd">        - `\**kwargs` - the negative logarithm of the tolerance</span>
+<span class="sd">    :param np.ndarray XYZ: a 2D array with coordinates stored as column vectors</span>
+<span class="sd">    :param np.ndarray elems: a list of elements symbols</span>
+<span class="sd">    :kwarg int neglogtol: the negative logarithm of the tolerance</span>
 
 <span class="sd">    :returns: indcies of the general and special positions ``(general, special)``</span>
 <span class="sd">    &#39;&#39;&#39;</span>
