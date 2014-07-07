@@ -192,13 +192,45 @@ of <span class="math">\(\sin(\theta)/\lambda\)</span>.</p>
 
 <dl class="function">
 <dt id="strufac.enumerate_hRs">
-<tt class="descclassname">strufac.</tt><tt class="descname">enumerate_hRs</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#enumerate_hRs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.enumerate_hRs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descclassname">strufac.</tt><tt class="descname">enumerate_hRs</tt><big>(</big><em>pdb</em>, <em>hkl</em><big>)</big><a class="reference internal" href="_modules/strufac.html#enumerate_hRs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.enumerate_hRs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate all symmetry mate reflections</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pdb</strong> &#8211; instance of <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
+<li><strong>hkl</strong> (<em>np.ndarray</em>) &#8211; Miller indicies stored as column vectors</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the symmetry equivalent reflections</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="strufac.enumerate_hTs">
-<tt class="descclassname">strufac.</tt><tt class="descname">enumerate_hTs</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#enumerate_hTs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.enumerate_hTs" title="Permalink to this definition">¶</a></dt>
-<dd></dd></dl>
+<tt class="descclassname">strufac.</tt><tt class="descname">enumerate_hTs</tt><big>(</big><em>pdb</em>, <em>hkl</em><big>)</big><a class="reference internal" href="_modules/strufac.html#enumerate_hTs"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.enumerate_hTs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate all reciprocal space translational shift scalar products</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>pdb</strong> &#8211; instance of <a class="reference internal" href="#strufac.ParsePDB" title="strufac.ParsePDB"><tt class="xref py py-class docutils literal"><span class="pre">ParsePDB</span></tt></a></li>
+<li><strong>hkl</strong> (<em>np.ndarray</em>) &#8211; Miller indicies stored as column vectors</li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the reciprocal space translational shifts</p>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
 
 <dl class="function">
 <dt id="strufac.frac_coords">
