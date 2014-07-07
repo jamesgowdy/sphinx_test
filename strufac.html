@@ -145,7 +145,7 @@ the PDB file using the symmetry operators. Special positions are removed.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>F</strong>  - a complex structure factor</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a complex structure factor</p>
 </td>
 </tr>
 </tbody>
@@ -186,7 +186,7 @@ Use this function for better accuracy than matricies given in PDB record.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
 <li><strong>abc</strong> &#8211; unit cell lengths (the crystallographic basis vectors): a, b, c</li>
-<li><strong>angles</strong> &#8211; the angles between the vectors: <span class="math">\(\alpha, \beta \gamma\)</span></li>
+<li><strong>angles</strong> &#8211; the angles between the vectors: <span class="math">\(\alpha, \beta, \gamma\)</span></li>
 </ul>
 </td>
 </tr>
@@ -274,7 +274,7 @@ with shape <em>(nsymops, 3, N)</em></p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>hkls, ds, stol</strong> - a tuple of hkl indicies with shape <em>(3, N)</em>
-the interplanar distances, and <span class="math">\(\sin(\theta)/\lambda\)</span> values</p>
+the interplanar distances, and <span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span> values</p>
 </td>
 </tr>
 </tbody>
