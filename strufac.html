@@ -168,7 +168,7 @@ to a given reflection</p>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>d, stol</strong> - a tuple containing the interplanar distances and 
-<span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span></p>
+<span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span> values</p>
 </td>
 </tr>
 </tbody>
@@ -190,7 +190,7 @@ Use this function for better accuracy than matricies given in PDB record.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>S, SI</strong> the scale matrix and the inverse scale matrix</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>S, SI</strong> the scale and inverse scale matricies</p>
 </td>
 </tr>
 </tbody>
@@ -207,7 +207,7 @@ Use this function for better accuracy than matricies given in PDB record.</p>
 <tbody valign="top">
 <tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>F</strong> (<em>complex/np.ndarray</em>) &#8211; complex structure factor</td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>amp, phi</strong> - amplitude and phase in radians</td>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><strong>amp, phi</strong> - the structure factor amplitude and phase in radians</td>
 </tr>
 </tbody>
 </table>
@@ -228,7 +228,8 @@ i.e. shape <em>(3, N)</em></li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the symmetry equivalent reflections with shape <em>(nsymops, 3, N)</em></p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the symmetry equivalent reflections stored in a matrix 
+with shape <em>(nsymops, 3, N)</em></p>
 </td>
 </tr>
 </tbody>
@@ -273,7 +274,7 @@ i.e. shape <em>(3, N)</em></li>
 </td>
 </tr>
 <tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>hkls, ds, stol</strong> - a tuple of hkl indicies with shape <em>(3, N)</em>
-the interplanar distances, and <span class="math">\(\sin(\theta)/\lambda\)</span>.</p>
+the interplanar distances, and <span class="math">\(\sin(\theta)/\lambda\)</span> values</p>
 </td>
 </tr>
 </tbody>
@@ -318,7 +319,7 @@ check if two coordinate vectors are equal</li>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>general, special</strong> - Miller indcies of the general and special positions</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last"><strong>general, special</strong> - the general and special position coordintates</p>
 </td>
 </tr>
 </tbody>
@@ -341,7 +342,7 @@ dictated by the Miller index.</p>
 </ul>
 </td>
 </tr>
-<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">pre-calulcated scattering factors</p>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">a vector of pre-calulcated scattering factors</p>
 </td>
 </tr>
 </tbody>

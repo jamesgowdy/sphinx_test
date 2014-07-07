@@ -195,7 +195,7 @@
 
 <span class="sd">    :param abc: unit cell lengths (the crystallographic basis vectors): a, b, c</span>
 <span class="sd">    :param angles: the angles between the vectors: :math:`\alpha, \beta \gamma`</span>
-<span class="sd">    :return: **S, SI** the scale matrix and the inverse scale matrix</span>
+<span class="sd">    :return: **S, SI** the scale and inverse scale matricies</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">S</span><span class="p">,</span> <span class="n">SI</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">)</span>
     <span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">c</span><span class="p">),</span> <span class="p">(</span><span class="n">al</span><span class="p">,</span> <span class="n">be</span><span class="p">,</span> <span class="n">ga</span><span class="p">)</span> <span class="o">=</span> <span class="n">abc</span><span class="p">,</span> <span class="n">angles</span>
@@ -232,7 +232,7 @@
 <span class="sd">    :param list elems: a list of elements symbols</span>
 <span class="sd">    :kwarg int neglogtol: the negative logarithm of the tolerance used to </span>
 <span class="sd">        check if two coordinate vectors are equal</span>
-<span class="sd">    :returns: **general, special** - Miller indcies of the general and special positions</span>
+<span class="sd">    :returns: **general, special** - the general and special position coordintates</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">three</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">xyz</span><span class="o">.</span><span class="n">shape</span>
     <span class="k">if</span> <span class="n">three</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;xyz array not correct shape&#39;</span><span class="p">)</span> 
@@ -257,7 +257,7 @@
 <span class="sd">    :param np.ndarray S: the scale matrix from :class:`ParsePDB &lt;ParsePDB&gt;`</span>
 <span class="sd">    :param np.ndarray hkl: Miller index vector or matrix with each triple stored as columns</span>
 <span class="sd">    :return: **d, stol** - a tuple containing the interplanar distances and </span>
-<span class="sd">        :math:`\frac{\sin(\theta)}{\lambda}` </span>
+<span class="sd">        :math:`\frac{\sin(\theta)}{\lambda}` values</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">ST</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">S</span><span class="p">)</span>
     <span class="n">norm</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">A</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">A</span><span class="o">*</span><span class="n">A</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">**</span><span class="mf">0.5</span>
@@ -273,7 +273,7 @@
 <span class="sd">    :param float dmin: minimum resolution (interplanar distance)</span>
 <span class="sd">    :kwarg float dmax: optional maximum resolution (interplanar distance) </span>
 <span class="sd">    :return: **hkls, ds, stol** - a tuple of hkl indicies with shape *(3, N)*</span>
-<span class="sd">        the interplanar distances, and :math:`\sin(\theta)/\lambda`.</span>
+<span class="sd">        the interplanar distances, and :math:`\sin(\theta)/\lambda` values</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="c"># get upper bound on hklmax by scaling basis vectors by dmin</span>
     <span class="n">hmax</span> <span class="o">=</span> <span class="mf">1.</span><span class="o">/</span><span class="p">(</span><span class="n">dmin</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">S</span><span class="p">[</span><span class="mi">0</span><span class="p">]))</span>
@@ -294,7 +294,7 @@
 
 <span class="sd">    :param uc: instance of :class:`UnitCell &lt;UnitCell&gt;`</span>
 <span class="sd">    :param np.ndarray hkl: a Miller index triple</span>
-<span class="sd">    :return: pre-calulcated scattering factors</span>
+<span class="sd">    :return: a vector of pre-calulcated scattering factors</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">f0</span><span class="p">,</span> <span class="n">fB</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">[]</span>
     <span class="n">stol2</span> <span class="o">=</span> <span class="n">stol</span><span class="o">*</span><span class="n">stol</span>
@@ -330,7 +330,7 @@
 
 <span class="sd">    :param F: complex structure factor</span>
 <span class="sd">    :type F: complex/np.ndarray</span>
-<span class="sd">    :return: **amp, phi** - amplitude and phase in radians</span>
+<span class="sd">    :return: **amp, phi** - the structure factor amplitude and phase in radians</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">F</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">angle</span><span class="p">(</span><span class="n">F</span><span class="p">)</span> 
 </div>
@@ -340,7 +340,8 @@
 <span class="sd">    :param pdb: instance of :class:`ParsePDB &lt;ParsePDB&gt;`</span>
 <span class="sd">    :param np.ndarray hkl: Miller indicies stored as column vectors </span>
 <span class="sd">        i.e. shape *(3, N)*</span>
-<span class="sd">    :return: the symmetry equivalent reflections with shape *(nsymops, 3, N)*</span>
+<span class="sd">    :return: the symmetry equivalent reflections stored in a matrix </span>
+<span class="sd">        with shape *(nsymops, 3, N)*</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">Rc</span><span class="o">.</span><span class="n">T</span><span class="p">,</span> <span class="n">hkl</span><span class="p">)</span> <span class="k">for</span> <span class="n">Rc</span> <span class="ow">in</span> <span class="n">pdb</span><span class="o">.</span><span class="n">Rc</span><span class="p">])</span>
 </div>
