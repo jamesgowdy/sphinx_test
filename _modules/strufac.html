@@ -74,7 +74,7 @@
 <span class="sd">    :ivar xc: x fractional coordinates for the assymetric unit</span>
 <span class="sd">    :ivar yc: y fractional coordinates for the assymetric unit</span>
 <span class="sd">    :ivar zc: z fractional coordinates for the assymetric unit</span>
-<span class="sd">    :ivar n: atomic occupancies</span>
+<span class="sd">    :ivar n: occupancies</span>
 <span class="sd">    :ivar Biso: isotropic B-factors</span>
 <span class="sd">    :ivar e: element symbols</span>
 <span class="sd">    :ivar S: the scale matrix for deorthoganlisation</span>
@@ -163,8 +163,8 @@
 <span class="sd">    :ivar xc: x fractional coordinates for the unit cell </span>
 <span class="sd">    :ivar yc: y fractional coordinates for the unit cell</span>
 <span class="sd">    :ivar zc: z fractional coordinates for the unit cell</span>
-<span class="sd">    :ivar Biso: isotropic B-factors</span>
 <span class="sd">    :ivar n: occupancies </span>
+<span class="sd">    :ivar Biso: isotropic B-factors</span>
 <span class="sd">    :ivar e: element symbols</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="n">pdb</span><span class="p">):</span>
@@ -273,7 +273,8 @@
     <span class="k">return</span> <span class="mf">1.</span><span class="o">/</span><span class="n">dstar</span>
 </div>
 <div class="viewcode-block" id="stol"><a class="viewcode-back" href="../strufac.html#strufac.stol">[docs]</a><span class="k">def</span> <span class="nf">stol</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
-    <span class="sd">r&#39;&#39;&#39;Convert a interplanar distance to :math:`\frac{\sin(\theta)}{\lambda}`</span>
+    <span class="sd">r&#39;&#39;&#39;Convert an interplanar distance to :math:`\frac{\sin(\theta)}{\lambda}`</span>
+<span class="sd">    using Bragg&#39;s law.</span>
 
 <span class="sd">    :param d: the interplanar distance</span>
 <span class="sd">    :type d: as a scalar or a numpy.ndarray</span>
@@ -306,10 +307,17 @@
 <div class="viewcode-block" id="recipunit"><a class="viewcode-back" href="../strufac.html#strufac.recipunit">[docs]</a><span class="k">def</span> <span class="nf">recipunit</span><span class="p">():</span>
     <span class="k">pass</span>
 </div>
-<div class="viewcode-block" id="calc_scatfact"><a class="viewcode-back" href="../strufac.html#strufac.calc_scatfact">[docs]</a><span class="k">def</span> <span class="nf">calc_scatfact</span><span class="p">(</span><span class="n">abc</span><span class="p">,</span><span class="n">stol</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;Calculate a single scattering factor&#39;&#39;&#39;</span>
-    <span class="n">f</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">stol</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span><span class="o">+</span><span class="n">c</span>
-    <span class="k">return</span> <span class="n">f</span>
+<div class="viewcode-block" id="calc_scatfact"><a class="viewcode-back" href="../strufac.html#strufac.calc_scatfact">[docs]</a><span class="k">def</span> <span class="nf">calc_scatfact</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="n">B</span><span class="p">,</span><span class="n">C</span><span class="p">,</span><span class="n">stol</span><span class="p">):</span>
+    <span class="sd">r&#39;&#39;&#39;Calculate an atomic scattering factor at a given resolution</span>
+<span class="sd">    of :math:`\frac{\sin(\theta)}{\lambda}`.</span>
+
+<span class="sd">    :param list A: seq of the 4 Cromer-Mann A parameters</span>
+<span class="sd">    :param list B: seq of the 4 Cromer-Mann B parameters</span>
+<span class="sd">    :param float C: the Cromer-Mann C parameter</span>
+<span class="sd">    :param float stol: :math:`\frac{\sin(\theta)}{\lambda}`</span>
+<span class="sd">    :return: the atomic scattering factor at the specified resolution </span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="nb">sum</span><span class="p">(</span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">*</span><span class="n">stol</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">))</span><span class="o">+</span><span class="n">C</span>
 </div>
 <div class="viewcode-block" id="is_enhanced"><a class="viewcode-back" href="../strufac.html#strufac.is_enhanced">[docs]</a><span class="k">def</span> <span class="nf">is_enhanced</span><span class="p">():</span>
     <span class="k">pass</span>
@@ -319,16 +327,16 @@
 </div>
 <div class="viewcode-block" id="is_centric"><a class="viewcode-back" href="../strufac.html#strufac.is_centric">[docs]</a><span class="k">def</span> <span class="nf">is_centric</span><span class="p">():</span>
     <span class="k">pass</span>
-
 </div>
 <div class="viewcode-block" id="directsum_F"><a class="viewcode-back" href="../strufac.html#strufac.directsum_F">[docs]</a><span class="k">def</span> <span class="nf">directsum_F</span><span class="p">(</span><span class="n">pdb</span><span class="p">,</span> <span class="n">hkl</span><span class="p">):</span>
 
     <span class="c"># precalculate scattering factors</span>
-    <span class="c">#fs = {}</span>
-    <span class="c">#stol = 1./(2*resolution(S, hkl)</span>
-    <span class="c">#for e in set(pdb.e):</span>
-    <span class="c">#    f = calc_scatfact(CMA[e], CMB[e], CMC[e], stol)</span>
-    <span class="c">#    fs[e] = f</span>
+    <span class="n">fs</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="n">stol_</span> <span class="o">=</span> <span class="n">stol</span><span class="p">(</span><span class="n">resolution</span><span class="p">(</span><span class="n">S</span><span class="p">,</span> <span class="n">hkl</span><span class="p">))</span>
+    <span class="k">for</span> <span class="n">e</span> <span class="ow">in</span> <span class="nb">set</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">e</span><span class="p">):</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">calc_scatfact</span><span class="p">(</span><span class="n">CMA</span><span class="p">[</span><span class="n">e</span><span class="p">],</span> <span class="n">CMB</span><span class="p">[</span><span class="n">e</span><span class="p">],</span> <span class="n">CMC</span><span class="p">[</span><span class="n">e</span><span class="p">],</span> <span class="n">stol_</span><span class="p">)</span>
+        <span class="n">fs</span><span class="p">[</span><span class="n">e</span><span class="p">]</span> <span class="o">=</span> <span class="n">f</span>
+
 
     <span class="c"># loop over all atoms in unit cell </span>
     
@@ -336,7 +344,6 @@
     <span class="c">#    for R, t in zip(pdb.Rc, pdb.tc):</span>
     <span class="c">#        np.dot(pdb.</span>
     <span class="k">pass</span>
-
 
 <span class="c">#if __name__ == &#39;__main__&#39;:</span>
 <span class="c">#</span>

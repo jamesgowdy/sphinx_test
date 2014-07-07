@@ -88,7 +88,7 @@ fractional crystallographic basis.</p>
 <li><strong>xc</strong> &#8211; x fractional coordinates for the assymetric unit</li>
 <li><strong>yc</strong> &#8211; y fractional coordinates for the assymetric unit</li>
 <li><strong>zc</strong> &#8211; z fractional coordinates for the assymetric unit</li>
-<li><strong>n</strong> &#8211; atomic occupancies</li>
+<li><strong>n</strong> &#8211; occupancies</li>
 <li><strong>Biso</strong> &#8211; isotropic B-factors</li>
 <li><strong>e</strong> &#8211; element symbols</li>
 <li><strong>S</strong> &#8211; the scale matrix for deorthoganlisation</li>
@@ -124,8 +124,8 @@ the PDB file using the symmetry operators. Special positions are removed.</p>
 <li><strong>xc</strong> &#8211; x fractional coordinates for the unit cell</li>
 <li><strong>yc</strong> &#8211; y fractional coordinates for the unit cell</li>
 <li><strong>zc</strong> &#8211; z fractional coordinates for the unit cell</li>
-<li><strong>Biso</strong> &#8211; isotropic B-factors</li>
 <li><strong>n</strong> &#8211; occupancies</li>
+<li><strong>Biso</strong> &#8211; isotropic B-factors</li>
 <li><strong>e</strong> &#8211; element symbols</li>
 </ul>
 </td>
@@ -136,8 +136,26 @@ the PDB file using the symmetry operators. Special positions are removed.</p>
 
 <dl class="function">
 <dt id="strufac.calc_scatfact">
-<tt class="descclassname">strufac.</tt><tt class="descname">calc_scatfact</tt><big>(</big><em>abc</em>, <em>stol</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_scatfact"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_scatfact" title="Permalink to this definition">¶</a></dt>
-<dd><p>Calculate a single scattering factor</p>
+<tt class="descclassname">strufac.</tt><tt class="descname">calc_scatfact</tt><big>(</big><em>A</em>, <em>B</em>, <em>C</em>, <em>stol</em><big>)</big><a class="reference internal" href="_modules/strufac.html#calc_scatfact"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.calc_scatfact" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculate an atomic scattering factor at a given resolution
+of <span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first simple">
+<li><strong>A</strong> (<em>list</em>) &#8211; seq of the 4 Cromer-Mann A parameters</li>
+<li><strong>B</strong> (<em>list</em>) &#8211; seq of the 4 Cromer-Mann B parameters</li>
+<li><strong>C</strong> (<em>float</em>) &#8211; the Cromer-Mann C parameter</li>
+<li><strong>stol</strong> (<em>float</em>) &#8211; <span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span></li>
+</ul>
+</td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body"><p class="first last">the atomic scattering factor at the specified resolution</p>
+</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
@@ -315,7 +333,8 @@ to a given reflection</p>
 <dl class="function">
 <dt id="strufac.stol">
 <tt class="descclassname">strufac.</tt><tt class="descname">stol</tt><big>(</big><em>d</em><big>)</big><a class="reference internal" href="_modules/strufac.html#stol"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.stol" title="Permalink to this definition">¶</a></dt>
-<dd><p>Convert a interplanar distance to <span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span></p>
+<dd><p>Convert an interplanar distance to <span class="math">\(\frac{\sin(\theta)}{\lambda}\)</span>
+using Bragg&#8217;s law.</p>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
