@@ -103,7 +103,12 @@ fractional crystallographic basis.</p>
 <dt id="strufac.ParsePDB.recalc">
 <tt class="descname">recalc</tt><big>(</big><em>dec=4</em><big>)</big><a class="reference internal" href="_modules/strufac.html#ParsePDB.recalc"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.ParsePDB.recalc" title="Permalink to this definition">¶</a></dt>
 <dd><p>If the scale matrix is changed using the <a class="reference internal" href="#strufac.calc_scale" title="strufac.calc_scale"><tt class="xref py py-func docutils literal"><span class="pre">calc_scale()</span></tt></a> method then
-we must recalulate the fractional basis coordinates and symops.</p>
+we must recalulate the fractional basis coordinates and symops.:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">pdb</span> <span class="o">=</span> <span class="n">ParsePDB</span><span class="p">(</span><span class="s">&#39;example.pdb&#39;</span><span class="p">)</span>
+<span class="n">pdb</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">SI</span> <span class="o">=</span> <span class="n">calc_scale</span><span class="p">(</span><span class="n">pdb</span><span class="o">.</span><span class="n">abc</span><span class="p">,</span> <span class="n">pdb</span><span class="o">.</span><span class="n">angles</span><span class="p">)</span>
+<span class="n">pdb</span><span class="o">.</span><span class="n">recalc</span><span class="p">()</span>
+</pre></div>
+</div>
 <table class="docutils field-list" frame="void" rules="none">
 <col class="field-name" />
 <col class="field-body" />
@@ -298,22 +303,49 @@ the interplanar distances, and <span class="math">\(\frac{\sin(\theta)}{\lambda}
 <dl class="function">
 <dt id="strufac.is_absent">
 <tt class="descclassname">strufac.</tt><tt class="descname">is_absent</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#is_absent"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.is_absent" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if reflections are systematically absent
-:return: None</p>
+<dd><p>Check if reflections are systematically absent</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param :</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="strufac.is_centric">
 <tt class="descclassname">strufac.</tt><tt class="descname">is_centric</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#is_centric"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.is_centric" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if reflections are centric
-:return: None</p>
+<dd><p>Check if reflections are centric</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param :</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">
 <dt id="strufac.is_enhanced">
 <tt class="descclassname">strufac.</tt><tt class="descname">is_enhanced</tt><big>(</big><big>)</big><a class="reference internal" href="_modules/strufac.html#is_enhanced"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#strufac.is_enhanced" title="Permalink to this definition">¶</a></dt>
-<dd><p>Check if reflections are systematically enhanced
-:return: None</p>
+<dd><p>Check if reflections are systematically enhanced</p>
+<table class="docutils field-list" frame="void" rules="none">
+<col class="field-name" />
+<col class="field-body" />
+<tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Param :</th><td class="field-body"></td>
+</tr>
+<tr class="field-even field"><th class="field-name">Returns:</th><td class="field-body">None</td>
+</tr>
+</tbody>
+</table>
 </dd></dl>
 
 <dl class="function">

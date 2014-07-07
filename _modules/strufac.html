@@ -149,7 +149,11 @@
 
 <div class="viewcode-block" id="ParsePDB.recalc"><a class="viewcode-back" href="../strufac.html#strufac.ParsePDB.recalc">[docs]</a>    <span class="k">def</span> <span class="nf">recalc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
         <span class="sd">&#39;&#39;&#39;If the scale matrix is changed using the :func:`calc_scale` method then</span>
-<span class="sd">        we must recalulate the fractional basis coordinates and symops.</span>
+<span class="sd">        we must recalulate the fractional basis coordinates and symops.::</span>
+
+<span class="sd">            pdb = ParsePDB(&#39;example.pdb&#39;)</span>
+<span class="sd">            pdb.S, pdb.SI = calc_scale(pdb.abc, pdb.angles)</span>
+<span class="sd">            pdb.recalc()</span>
 
 <span class="sd">        :param int dec: number of decimal places to round the Rc matricies to</span>
 <span class="sd">        &#39;&#39;&#39;</span>
@@ -363,6 +367,8 @@
 </div>
 <div class="viewcode-block" id="is_enhanced"><a class="viewcode-back" href="../strufac.html#strufac.is_enhanced">[docs]</a><span class="k">def</span> <span class="nf">is_enhanced</span><span class="p">():</span>
     <span class="sd">&#39;&#39;&#39;Check if reflections are systematically enhanced</span>
+
+<span class="sd">    :param:</span>
 <span class="sd">    :return: None</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">is_integer</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">A</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">A</span><span class="o">-</span><span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">A</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mf">1e-10</span><span class="p">)</span>
@@ -370,12 +376,16 @@
 </div>
 <div class="viewcode-block" id="is_absent"><a class="viewcode-back" href="../strufac.html#strufac.is_absent">[docs]</a><span class="k">def</span> <span class="nf">is_absent</span><span class="p">():</span>
     <span class="sd">&#39;&#39;&#39;Check if reflections are systematically absent</span>
+
+<span class="sd">    :param:</span>
 <span class="sd">    :return: None</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">pass</span>
 </div>
 <div class="viewcode-block" id="is_centric"><a class="viewcode-back" href="../strufac.html#strufac.is_centric">[docs]</a><span class="k">def</span> <span class="nf">is_centric</span><span class="p">():</span>
     <span class="sd">&#39;&#39;&#39;Check if reflections are centric</span>
+
+<span class="sd">    :param:</span>
 <span class="sd">    :return: None</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="k">pass</span>
