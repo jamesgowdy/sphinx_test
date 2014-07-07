@@ -148,14 +148,16 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">recalc</span><span class="p">()</span>
 
 <div class="viewcode-block" id="ParsePDB.recalc"><a class="viewcode-back" href="../strufac.html#strufac.ParsePDB.recalc">[docs]</a>    <span class="k">def</span> <span class="nf">recalc</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">dec</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
-        <span class="sd">&#39;&#39;&#39;If the scale matrix is changed using the :func:`calc_scale` method then</span>
-<span class="sd">        we must recalulate the fractional basis coordinates and symops.::</span>
+        <span class="sd">&#39;&#39;&#39;Update symops and fractional coordinates</span>
+
+<span class="sd">        :param int dec: number of decimal places to round the Rc matricies to</span>
+
+<span class="sd">        If the scale matrix is changed using the :func:`calc_scale` method then</span>
+<span class="sd">        we must recalulate the fractional basis coordinates and symops::</span>
 
 <span class="sd">            pdb = ParsePDB(&#39;example.pdb&#39;)</span>
 <span class="sd">            pdb.S, pdb.SI = calc_scale(pdb.abc, pdb.angles)</span>
 <span class="sd">            pdb.recalc()</span>
-
-<span class="sd">        :param int dec: number of decimal places to round the Rc matricies to</span>
 <span class="sd">        &#39;&#39;&#39;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">xyz_c</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">xyz_w</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">Rc</span> <span class="o">=</span> <span class="p">[</span><span class="n">np</span><span class="o">.</span><span class="n">around</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">R</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">SI</span><span class="p">),</span> <span class="n">dec</span><span class="p">)</span> <span class="k">for</span> <span class="n">R</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">Rw</span><span class="p">]</span>
