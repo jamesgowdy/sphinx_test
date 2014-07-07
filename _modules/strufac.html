@@ -331,8 +331,8 @@
 
 <span class="sd">    :param uc: instance of :class:`UnitCell &lt;UnitCell&gt;`</span>
 <span class="sd">    :param numpy.ndarray hkl: a Miller index triple</span>
-<span class="sd">    :return: scattering factors (``fBs``)</span>
-<span class="sd">    :rtype: 1D `numpy.ndarray`</span>
+<span class="sd">    :return: precalulcated scattering factors</span>
+<span class="sd">    :rtype: a 1D `numpy.ndarray` with a size equal to the the number of atoms in the unit cell</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">f0</span><span class="p">,</span> <span class="n">fB</span> <span class="o">=</span> <span class="p">{},</span> <span class="p">[]</span>
     <span class="n">stol</span> <span class="o">=</span> <span class="n">stol</span><span class="p">(</span><span class="n">resolution</span><span class="p">(</span><span class="n">uc</span><span class="o">.</span><span class="n">S</span><span class="p">,</span> <span class="n">hkl</span><span class="p">))</span>
@@ -351,7 +351,7 @@
 
 <span class="sd">    :param uc: instance of :class:`UnitCell &lt;UnitCell&gt;`</span>
 <span class="sd">    :param np.ndarray fBs: precalculated scattering factors with B-factor contributions</span>
-<span class="sd">    :param numpy.ndarray hkl: a Miller index triple</span>
+<span class="sd">    :param np.ndarray hkl: a Miller index triple</span>
 <span class="sd">    :return: a complex structure factor</span>
 <span class="sd">    :rtype: `complex` scalar</span>
 <span class="sd">    &#39;&#39;&#39;</span>
@@ -366,7 +366,7 @@
     <span class="sd">&#39;&#39;&#39;Convert complex structure factor(s) to a amplitude and phases</span>
 
 <span class="sd">    :param F: complex structure factor</span>
-<span class="sd">    :type F: complex or 1D np.ndarray</span>
+<span class="sd">    :type F: complex</span>
 <span class="sd">    :return: the amplitude and phase: ``(amp, phi)`` </span>
 <span class="sd">    :rtype: a tuple such as (`float`, `float`) or (1D `np.ndarray`, 1D `np.ndarray`)</span>
 <span class="sd">    &#39;&#39;&#39;</span>
