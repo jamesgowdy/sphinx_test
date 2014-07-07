@@ -199,15 +199,12 @@
     <span class="sd">&#39;&#39;&#39;Find unique atom coordinates as columns in a matrix in order to </span>
 <span class="sd">    exclude special position atoms on symmetry axes.</span>
 
-<span class="sd">    Args:</span>
-<span class="sd">        XYZ (np.ndarray): a 2D array with coordinates stored as column vectors</span>
-<span class="sd">        elems (np.ndarray): a list of elements symbols</span>
+<span class="sd">    :Parameters: </span>
+<span class="sd">        - `XYZ` - a 2D array with coordinates stored as column vectors</span>
+<span class="sd">        - `elems` - a list of elements symbols</span>
+<span class="sd">        - `\**kwargs` - the negative logarithm of the tolerance</span>
 
-<span class="sd">    Kwargs:</span>
-<span class="sd">        neglogtol (int): the negative logarithm of the tolerance</span>
-
-<span class="sd">    Returns:</span>
-<span class="sd">        indcies of the general and special positions ``(general, special)``</span>
+<span class="sd">    :returns: indcies of the general and special positions ``(general, special)``</span>
 <span class="sd">    &#39;&#39;&#39;</span>
     <span class="n">three</span><span class="p">,</span> <span class="n">n</span> <span class="o">=</span> <span class="n">XYZ</span><span class="o">.</span><span class="n">shape</span>
     <span class="k">if</span> <span class="n">three</span> <span class="o">!=</span> <span class="mi">3</span><span class="p">:</span> <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s">&#39;XYZ array not correct shape&#39;</span><span class="p">)</span> 
